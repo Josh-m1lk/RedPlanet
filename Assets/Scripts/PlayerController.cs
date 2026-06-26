@@ -1,5 +1,3 @@
-//using System.Numerics;
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,6 +5,8 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float speed = 0f;
+
+    [Header("Vectors")]
     private Vector2 move, mouseLook;
     private Vector3 rotationTarget;
 
@@ -15,18 +15,22 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        move = context.ReadValue<Vector2>();
+        move = context.ReadValue<Vector2>();//Call to move input actions
     }
 
     public void OnMouseLook(InputAction.CallbackContext context)
     {
-        mouseLook = context.ReadValue<Vector2>();
+        mouseLook = context.ReadValue<Vector2>();//Call to mouse pointer position
+    }
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();//Get rb on awake
     }
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-
+       
     }
 
     // Update is called once per frame
@@ -36,34 +40,39 @@ public class PlayerController : MonoBehaviour
 
         if (isPc)
         {
-            RaycastHit hit;
+            //Make ground plane and create a ray towards the mouse pointer
+            Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
             Ray ray = Camera.main.ScreenPointToRay(mouseLook);
 
-            if (Physics.Raycast(ray, out hit))
+            //Player turn towards wherever ground plane is
+            if (groundPlane.Raycast(ray, out float enter))
             {
-                rotationTarget = hit.point;
+                Vector3 hitPoint = ray.GetPoint(enter);
+                rotationTarget = hitPoint;
             }
-            playerLook();
+            PlayerLook();
         }
     }
 
     public void MovePlayer()
     {
+        //Get player input and move based on input, speed, and direction.
         Vector3 movement = new Vector3(move.x, 0f, move.y);
-
         transform.Translate(movement * speed * Time.deltaTime, Space.World);
     }
 
-    public void playerLook()
+    public void PlayerLook()
     {
+        //Grabbing the rotation of player to target
         var lookPos = rotationTarget - transform.position;
         lookPos.y = 0;
         var rotation = Quaternion.LookRotation(lookPos);
 
-        Vector3 aimDirection = new Vector3(rotationTarget.x, 0f, rotationTarget.y);
+        Vector3 aimDirection = new Vector3(rotationTarget.x, 0f, rotationTarget.y);//creating new vector3 directions 
 
         if (aimDirection != Vector3.zero)
         {
+            //if aim direction exists face that way and smoothly turn player
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.15f);
         }
     }
