@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 
 public class GameManager : MonoBehaviour
 {

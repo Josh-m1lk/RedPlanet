@@ -1,20 +1,20 @@
-using System.ComponentModel.Design;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
     [Header("Health")]
-    public float health = 100f;
+    public float health;
+    public float maxHealth = 100f;
     private float damageTaken;
     private bool isDead; 
+    private bool isDamageable;
 
     public PlayerShooting playerShooting;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -30,11 +30,13 @@ public class Health : MonoBehaviour
         //Check to see if enemy is being hit by bullet
         //If enemy takes damage descrease health
         damageTaken = playerShooting.bulletDamage - health;
+
+        //if 
     }
 
     public void Death()
     {
-        //If player dies disable controls to player as well as camera
-        //If enemy dies destroy the instance of the enemy dead
+        //If player reaches 0 health they die
+        //If enemy reaches 0 health they die
     }
 }
