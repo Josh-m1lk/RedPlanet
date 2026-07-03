@@ -9,7 +9,6 @@ public class PlayerShooting : MonoBehaviour
     public float bulletSpeed = 0f;
     public float fireRate = 0f;
     public float ammoCount = 0f;
-    public float bulletDamage = 15f;
     private float canFire;
 
     private Rigidbody rb;
