@@ -160,7 +160,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d37dc00b0eeff646bd4fa100f845d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AiEnemy
-  detectionRadius: {fileID: 0}
+  player: {fileID: 6955212728715348891, guid: 37bc4bd0e0348ff4f9467b710de76f8b, type: 3}
+  detection: 5
+  canSeePlayer: 0
   isAttacking: 0
 --- !u!114 &7148906996127112880
 MonoBehaviour:

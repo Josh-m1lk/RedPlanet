@@ -1,14 +1,14 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
     [Header("AI")]
-    private PlayerController player;
+    public GameObject player;
     private NavMeshAgent enemyAI;
-    public GameObject meleeRadius;
-    private float detection;
+    //public GameObject meleeRadius;
+    public float detection = 5f;
+    public bool canSeePlayer = false;
 
     //Temporary delete
     /*private Collider[] hitColliders;
@@ -23,7 +23,6 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         //hitColliders = new Collider[maxColliders];
-        player = FindAnyObjectByType<PlayerController>(); 
         enemyAI = GetComponent<NavMeshAgent>();
     }
 
@@ -52,13 +51,59 @@ public class Enemy : MonoBehaviour
 
     void PlayerDetect()
     {
-        //Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;//get direction
-        Vector3 forward = transform.TransformDirection(Vector3.forward) * 10;
-        if (Physics.Raycast(transform.position, forward, out RaycastHit hit, detection))
+        //float distance = Vector3.Distance(transform.position, player.transform.position);
+
+        /*if(distance < detection)
         {
-            Debug.Log("Player detected");
+            canSeePlayer = true;
             enemyAI.SetDestination(player.transform.position);
         }
-        Debug.DrawRay(transform.position, forward, Color.red);
+        else
+        {
+            //Debug.Log("Not in range");
+        }*/
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, player.transform.position - transform.position, out hit, Mathf.Infinity))
+        {
+            if (hit.transform == player.transform)
+            {
+                Debug.Log("I see you");
+            }
+        }
+        Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red);
     }
+    
+    /*
+    Enum enemyStates{
+
+    Walking around
+    looking around
+    asleep
+    chasing the player
+    
+    }
+
+
+    DetectPlayer()
+
+    //radius for how close the player and enemy is to activate a raycast
+        //enemy curious or cautious
+        //maybe it looks around
+
+    //The enemy is curious or cautious
+
+
+    //when the enemy is cautious create a cone type raycast in front of it
+
+
+    //if the player is within the raycast of the cone
+        //enemy starts chasing the player
+
+    bool PlayerWithinRange = player is in cone
+
+    if (PlayerWithinRange)
+    {
+        //chase
+    }*/
 }
