@@ -4,7 +4,7 @@ using UnityEngine;
 [CustomEditor(typeof(EnemyFOV))]
 public class EnemyFOVEditor : Editor
 {
-    /*private void OceneGUI()
+    public void OnSceneGUI()
     {
         EnemyFOV fov = (EnemyFOV)target;
         Handles.color = Color.white;
@@ -28,6 +28,6 @@ public class EnemyFOVEditor : Editor
     {
         angleInDegrees += eulerY;
 
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, (angleInDegrees * Mathf.Deg2Rad));
-    }*/
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
 }

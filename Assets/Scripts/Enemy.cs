@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
 {
     [Header("AI")]
     public GameObject player;
-    private NavMeshAgent enemyAI;
+    //private NavMeshAgent enemyAI;
     //public GameObject meleeRadius;
     public float detection = 5f;
     public bool canSeePlayer = false;
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         //hitColliders = new Collider[maxColliders];
-        enemyAI = GetComponent<NavMeshAgent>();
+        //enemyAI = GetComponent<NavMeshAgent>();
     }
 
     void Start()
@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
             //Debug.Log("Not in range");
         }*/
 
-        RaycastHit hit;
+        /*RaycastHit hit;
         if (Physics.Raycast(transform.position, player.transform.position - transform.position, out hit, Mathf.Infinity))
         {
             if (hit.transform == player.transform)
@@ -71,9 +71,9 @@ public class Enemy : MonoBehaviour
                 Debug.Log("I see you");
             }
         }
-        Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red);
+        Debug.DrawRay(transform.position, player.transform.position - transform.position, Color.red);*/
     }
-    
+
     /*
     Enum enemyStates{
 
