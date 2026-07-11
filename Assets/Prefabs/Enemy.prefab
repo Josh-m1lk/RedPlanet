@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 6619114674185653153}
   - component: {fileID: 4250473489655244892}
   - component: {fileID: 7768412646439819455}
-  - component: {fileID: 8946839987680548609}
+  - component: {fileID: 5985058996594818155}
   - component: {fileID: 7148906996127112880}
+  - component: {fileID: 4016038907627429265}
   - component: {fileID: 6803832307656636900}
   m_Layer: 0
   m_Name: Enemy
@@ -148,7 +149,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8946839987680548609
+--- !u!114 &5985058996594818155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -157,12 +158,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1753261692016536763}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d37dc00b0eeff646bd4fa100f845d68, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e62b9c6ea352e445b232cb2acbb2a2f, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AiEnemy
-  player: {fileID: 6955212728715348891, guid: 37bc4bd0e0348ff4f9467b710de76f8b, type: 3}
-  detection: 5
-  canSeePlayer: 0
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
+  enemySpeed: 0
+  player: {fileID: 0}
+  meleeRadius: {fileID: 0}
   isAttacking: 0
 --- !u!114 &7148906996127112880
 MonoBehaviour:
@@ -178,6 +179,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   currentHealth: 0
   maxHealth: 100
+  isDead: 0
+--- !u!114 &4016038907627429265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753261692016536763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 993d235ccb79a794fa1bdd99b163c6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyFOV
+  radius: 7
+  angle: 97
+  playerRef: {fileID: 0}
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 64
+  canSeePlayer: 0
+  canHearPlayer: 0
 --- !u!195 &6803832307656636900
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -644,7 +669,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -696,7 +721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3062613223822647082
 Transform:
   m_ObjectHideFlags: 0
