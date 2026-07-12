@@ -1,9 +1,6 @@
 using UnityEngine;
-using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
-{
-    enum EnemyStates
+public enum EnemyStates
     {
         Patrol,
         Investigate,
@@ -11,16 +8,20 @@ public class EnemyAI : MonoBehaviour
         Attack
     };
 
-    public NavMeshAgent navMesh;
-
+public class EnemyAI : MonoBehaviour
+{
+    private EnemyStates enemyStates; 
+    private Coroutine lookCoroutine;
+    private Vector3 targetLastSeen;
 
     [Header("ScriptReferences")]
-    public EnemyFOV enemyFOV;
-    public EnemyLocomotion enemyMovement;
+    [SerializeField] EnemyFOV enemyFOV;
+    [SerializeField] EnemyLocomotion enemyLocomotion;
 
     void Awake()
     {
-        
+        enemyFOV = GetComponent<EnemyFOV>();
+        enemyLocomotion = GetComponent<EnemyLocomotion>();
     }
 
     void Start()
@@ -30,13 +31,48 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (enemyFOV.canSeePlayer)
+        switch (enemyStates)
         {
-            navMesh.SetDestination(enemyFOV.playerRef.transform.position);
-        }
-        else
-        {
-            enemyFOV.canSeePlayer = false;
+            case EnemyStates.Patrol:
+                if (enemyFOV.canSeePlayer)
+                {
+                    enemyStates = EnemyStates.Chase;
+                }
+                break;
+            case EnemyStates.Investigate:
+                if (enemyFOV.canSeePlayer)
+                {
+                    if (lookCoroutine != null)
+                    {
+                        StopCoroutine(lookCoroutine);//if enemy sees player stop the coroutine
+                        enemyLocomotion.isSearching = false;//set search to false so to not stay true forever
+                    }
+                    enemyStates = EnemyStates.Chase;//enemy goes into chase state after coroutine is stopped
+                    break;
+                } 
+                enemyLocomotion.Investigate(targetLastSeen);//if enemy cant see player investigate
+                if (enemyLocomotion.hasReachedLastKnownPosition && lookCoroutine == null)
+                {
+                    lookCoroutine = StartCoroutine(enemyLocomotion.LookAround());//if enemy reached the last known pos of player and is not searching start look around
+                }
+                if (enemyLocomotion.hasFinishedSearching)
+                {
+                    lookCoroutine = null;
+                    enemyStates = EnemyStates.Patrol;//once enemy finishes search go back to patrol
+                }
+                break;
+            case EnemyStates.Chase:
+                if (enemyFOV.canSeePlayer)
+                {
+                    enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);//is enemy can see the player chase them
+                }
+                else
+                {
+                    enemyStates = EnemyStates.Investigate;
+                }
+                break;
+            case EnemyStates.Attack:
+                break;
         }
     }
 

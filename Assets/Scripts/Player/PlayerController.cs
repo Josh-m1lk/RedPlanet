@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 0f;
 
     [Header("Vectors")]
-    private Vector2 move, mouseLook;
+    private Vector2 moveInput, mouseLook;
     private Vector3 rotationTarget;
 
     private Rigidbody rb;
@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        move = context.ReadValue<Vector2>();//Call to move input actions
+        moveInput = context.ReadValue<Vector2>();//Call to move input actions
     }
 
     public void OnMouseLook(InputAction.CallbackContext context)
@@ -33,11 +33,15 @@ public class PlayerController : MonoBehaviour
        
     }
 
+    void FixedUpdate()
+    {
+        MovePlayer();
+    }
+
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
-
+        //moveInput = context.ReadValue<Vector2>();
         if (isPc)
         {
             //Make ground plane and create a ray towards the mouse pointer
@@ -57,8 +61,8 @@ public class PlayerController : MonoBehaviour
     public void MovePlayer()
     {
         //Get player input and move based on input, speed, and direction.
-        Vector3 movement = new Vector3(move.x, 0f, move.y);
-        transform.Translate(movement * speed * Time.deltaTime, Space.World);
+        Vector3 movement = new Vector3(moveInput.x, 0f, moveInput.y);
+        rb.MovePosition(rb.position + movement * speed * Time.deltaTime);
     }
 
     public void PlayerLook()
