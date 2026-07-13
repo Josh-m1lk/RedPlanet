@@ -38,6 +38,7 @@ public class EnemyAI : MonoBehaviour
                 {
                     enemyStates = EnemyStates.Chase;
                 }
+                
                 break;
             case EnemyStates.Investigate:
                 if (enemyFOV.canSeePlayer)

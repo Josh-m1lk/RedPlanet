@@ -134,10 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e62b9c6ea352e445b232cb2acbb2a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  enemyStates: 0
-  targetLastSeen: {x: 0, y: 0, z: 0}
   enemyFOV: {fileID: 4016038907627429265}
-  enemyLocomotion: {fileID: 0}
+  enemyLocomotion: {fileID: 6252909987855835056}
 --- !u!114 &7148906996127112880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,8 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993d235ccb79a794fa1bdd99b163c6ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFOV
-  radius: 10
-  angle: 97
+  radius: 20
+  angle: 130
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -187,9 +185,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83104a5a9befb9c449bf2da0244da83e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLocomotion
+  points: []
   hasReachedLastKnownPosition: 0
   isSearching: 0
   hasFinishedSearching: 0
+  isChasing: 0
 --- !u!195 &6803832307656636900
 NavMeshAgent:
   m_ObjectHideFlags: 0
