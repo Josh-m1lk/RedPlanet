@@ -10,6 +10,7 @@ public enum EnemyStates
 
 public class EnemyAI : MonoBehaviour
 {
+    [Header("References")]
     private EnemyStates enemyStates; 
     private Coroutine lookCoroutine;
     private Vector3 targetLastSeen;
@@ -26,20 +27,27 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        
+        enemyLocomotion.GoToNextPatrolPoint();
     }
 
     void Update()
     {
+        if (enemyFOV.canSeePlayer)
+        {
+            targetLastSeen = enemyFOV.playerRef.transform.position;
+        }
         switch (enemyStates)
         {
             case EnemyStates.Patrol:
                 if (enemyFOV.canSeePlayer)
                 {
                     enemyStates = EnemyStates.Chase;
+                    break;
                 }
                 
+                enemyLocomotion.Patrol();
                 break;
+
             case EnemyStates.Investigate:
                 if (enemyFOV.canSeePlayer)
                 {
@@ -51,7 +59,9 @@ public class EnemyAI : MonoBehaviour
                     enemyStates = EnemyStates.Chase;//enemy goes into chase state after coroutine is stopped
                     break;
                 } 
+
                 enemyLocomotion.Investigate(targetLastSeen);//if enemy cant see player investigate
+
                 if (enemyLocomotion.hasReachedLastKnownPosition && lookCoroutine == null)
                 {
                     lookCoroutine = StartCoroutine(enemyLocomotion.LookAround());//if enemy reached the last known pos of player and is not searching start look around
@@ -62,16 +72,23 @@ public class EnemyAI : MonoBehaviour
                     enemyStates = EnemyStates.Patrol;//once enemy finishes search go back to patrol
                 }
                 break;
+
             case EnemyStates.Chase:
                 if (enemyFOV.canSeePlayer)
                 {
                     enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);//is enemy can see the player chase them
+                    float distanceToPlayer = Vector3.Distance(transform.position, enemyFOV.playerRef.transform.position);
+                    if (distanceToPlayer <= enemyLocomotion.attackRange)
+                    {
+                        enemyStates = EnemyStates.Attack;
+                    }
                 }
                 else
                 {
                     enemyStates = EnemyStates.Investigate;
                 }
                 break;
+
             case EnemyStates.Attack:
                 break;
         }

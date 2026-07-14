@@ -4,64 +4,73 @@ using UnityEngine.AI;
 
 public class EnemyLocomotion : MonoBehaviour
 {
+    [Header("References")]
     private NavMeshAgent agent;
     [SerializeField] Transform[] points;
-
-    public bool hasReachedLastKnownPosition = false;
-    public bool isSearching = false;
-    public bool hasFinishedSearching = false;
-    public bool isChasing = false;
-
     private Quaternion leftRotation;
     private Quaternion rightRotation;
     private Quaternion startRotation;
 
+    [Header("Settings")]
     private float turnSpeed = 5f;
     private float rotationThreshold = 0.1f;
     private int destinationPoint;
+    private float waitTime = 2f;
+    private float patrolStoppingDistance = 0.5f;
+    private float investigateStoppingDistance = 1f;
+    public float attackRange = 2f;
+
+    public bool hasReachedLastKnownPosition = false;
+    public bool isSearching = false;
+    public bool hasFinishedSearching = false;
+    public bool isWaiting = false;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = 2f;//how far to stop from player 
         agent.autoBraking = false;//disable for continous movement 
     }
 
     void Start()
     {
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (!agent.pathPending && agent.remainingDistance <= 0.5f)
+    }
+
+    public void Patrol()
+    {
+        agent.stoppingDistance = patrolStoppingDistance;
+
+        if (isWaiting)return;//if the enemy is already waiting return nothing 
+
+        if (!agent.pathPending && agent.remainingDistance <= patrolStoppingDistance)
         {
-           // Patrol();
+           StartCoroutine(WaitAtPatrolPoint());//if distance is no longer being calculated and enemy is close or at start point begin couroutine to go to next
         }
     }
 
-    /*public void Patrol()
+    public void GoToNextPatrolPoint()
     {
-        if (points.Length == 0)
-        {
-            return;//return nothing if there are no points
-        }
+        if (points.Length == 0)return;//return nothing if there are no points
 
         agent.destination = points[destinationPoint].position;//enemy goes to current selected point
-
         destinationPoint = (destinationPoint + 1) % points.Length;//next point in array will become destination and will restart if needed
-    }*/
+    }
 
     public void Chase(Vector3 targetPosition)
     {
         agent.SetDestination(targetPosition);
-        isChasing = true;
     }
 
-    public void Investigate(Vector3 targetLastSeen)
+    public void Investigate(Vector3 destination)
     {
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        agent.SetDestination(destination);
+        agent.stoppingDistance = investigateStoppingDistance;
+
+        if (!agent.pathPending && agent.remainingDistance <= investigateStoppingDistance)
         {
             hasReachedLastKnownPosition = true;
         }
@@ -72,13 +81,25 @@ public class EnemyLocomotion : MonoBehaviour
 
     }
 
+    public IEnumerator WaitAtPatrolPoint()
+    {
+        isWaiting = true;
+        agent.isStopped = true;
+
+        yield return new WaitForSeconds(waitTime);
+
+        agent.isStopped = false;
+        GoToNextPatrolPoint();
+        isWaiting = false;
+    }
+
     public IEnumerator LookAround()
     {
         hasFinishedSearching = false;
         isSearching = true;
 
         float lookAngle = 45f;//lookangle is 45 degrees 
-        float searching = 3f;
+        float searching = 2.5f;
         WaitForSeconds look = new WaitForSeconds(searching);
 
         //creates left and right rotation, sets the start rotation
