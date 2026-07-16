@@ -18,7 +18,6 @@ public class EnemyLocomotion : MonoBehaviour
     private float waitTime = 2f;
     private float patrolStoppingDistance = 0.5f;
     private float investigateStoppingDistance = 1f;
-    public float attackRange = 2f;
 
     public bool hasReachedLastKnownPosition = false;
     public bool isSearching = false;
@@ -48,16 +47,20 @@ public class EnemyLocomotion : MonoBehaviour
 
         if (!agent.pathPending && agent.remainingDistance <= patrolStoppingDistance)
         {
-           StartCoroutine(WaitAtPatrolPoint());//if distance is no longer being calculated and enemy is close or at start point begin couroutine to go to next
+            StartCoroutine(WaitAtPatrolPoint());//if distance is no longer being calculated and enemy is close or at start point begin couroutine to go to next
         }
+    }
+
+    public void ReturnToPatrolPoint()
+    {
+        GoToNextPatrolPoint();//call to go back to current patrol point
     }
 
     public void GoToNextPatrolPoint()
     {
         if (points.Length == 0)return;//return nothing if there are no points
 
-        agent.destination = points[destinationPoint].position;//enemy goes to current selected point
-        destinationPoint = (destinationPoint + 1) % points.Length;//next point in array will become destination and will restart if needed
+        agent.destination = points[destinationPoint].position;//go to point 0
     }
 
     public void Chase(Vector3 targetPosition)
@@ -86,11 +89,14 @@ public class EnemyLocomotion : MonoBehaviour
         isWaiting = true;
         agent.isStopped = true;
 
-        yield return new WaitForSeconds(waitTime);
+        yield return new WaitForSeconds(waitTime);//enemy will wait at the current patrol point for x time
 
         agent.isStopped = false;
+
+        destinationPoint = (destinationPoint + 1) % points.Length;//next point in array will become destination
         GoToNextPatrolPoint();
-        isWaiting = false;
+
+        isWaiting = false;//enemy is no longer waiting because they are moving to next point
     }
 
     public IEnumerator LookAround()

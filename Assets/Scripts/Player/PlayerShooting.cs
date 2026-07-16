@@ -1,17 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Pool;
 
 public class PlayerShooting : MonoBehaviour
 {
     [Header("Bullet")]
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-    public float bulletSpeed = 0f;
-    public float fireRate = 0f;
-    public float ammoCount = 0f;
-    private float canFire;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField]Transform bulletSpawn;
 
-    private Rigidbody rb;
+    [Header("Settings")]
+    [SerializeField] float fireRate = 0f;
+    [SerializeField] int ammoCount = 0;
+
+    public ObjectPool<Bullet> objectPool {get; private set;}
+
+    private float nextFireTime;
 
     public void OnClick(InputAction.CallbackContext context)
     {
@@ -21,29 +24,14 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody>();//Get rb on awake
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void Fire()
     {
-        if (Time.time > canFire && ammoCount > 0)
+        if (Time.time > nextFireTime && ammoCount > 0)
         {
-            canFire = Time.time + fireRate;//how long you have to wait in between shots
+            nextFireTime = Time.time + fireRate;//how long you have to wait in between shots
             //Create new bullet and for each new one get rb
-            GameObject newBullet = Instantiate(bulletPrefab, bulletSpawn.position, Quaternion.identity);//Create new bullet
-            Rigidbody rb = newBullet.GetComponent<Rigidbody>();
-
-            if (rb != null)
-            {
-                rb.linearVelocity = bulletSpawn.forward * bulletSpeed;//if rb exists spawn bullet moving at set speed
-            }
+            GameObject newBullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);//Create new bullet
+            
             ammoCount--;
             Destroy(newBullet, 2f);//destroy after 2 seconds
         } 

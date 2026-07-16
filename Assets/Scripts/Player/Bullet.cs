@@ -2,19 +2,18 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    [Header("BulletStats")]
-    public int bulletDamage = 0;
+    [Header("References")]
+    public GameObject bulletPrefab;
+    public Transform bulletSpawn;
+    public Rigidbody rb;
 
-    void Start()
-    {
-        
-    }
+    [Header("Settings")]
+    public int bulletDamage = 0;
+    public float bulletSpeed = 0f;
 
     public void OnTriggerEnter(Collider other)
     {
-        Health health = other.GetComponent<Health>();//checks to see if obj has health script
-
-        if (health != null)
+        if (other.TryGetComponent(out Health health))
         {
             health.TakeDamage(bulletDamage);
             Destroy(gameObject);
@@ -22,9 +21,11 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    void Update()
+    public void BulletSpawn()
     {
-        
+        if (rb != null)
+        {
+            rb.linearVelocity = transform.forward * bulletSpeed;//if rb exists spawn bullet moving at set speed
+        }
     }
-
 }

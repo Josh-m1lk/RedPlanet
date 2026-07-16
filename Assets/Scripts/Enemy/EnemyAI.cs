@@ -18,11 +18,13 @@ public class EnemyAI : MonoBehaviour
     [Header("ScriptReferences")]
     [SerializeField] EnemyFOV enemyFOV;
     [SerializeField] EnemyLocomotion enemyLocomotion;
+    [SerializeField] EnemyAttack enemyAttack;
 
     void Awake()
     {
         enemyFOV = GetComponent<EnemyFOV>();
         enemyLocomotion = GetComponent<EnemyLocomotion>();
+        enemyAttack = GetComponent<EnemyAttack>();
     }
 
     void Start()
@@ -32,20 +34,16 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (enemyFOV.canSeePlayer)
-        {
-            targetLastSeen = enemyFOV.playerRef.transform.position;
-        }
         switch (enemyStates)
         {
             case EnemyStates.Patrol:
                 if (enemyFOV.canSeePlayer)
                 {
                     enemyStates = EnemyStates.Chase;
-                    break;
+                    break;//if player is seen in patrol state transition to chase state 
                 }
                 
-                enemyLocomotion.Patrol();
+                enemyLocomotion.Patrol();//activate patrol state 
                 break;
 
             case EnemyStates.Investigate:
@@ -60,7 +58,7 @@ public class EnemyAI : MonoBehaviour
                     break;
                 } 
 
-                enemyLocomotion.Investigate(targetLastSeen);//if enemy cant see player investigate
+                enemyLocomotion.Investigate(enemyFOV.playerRef.transform.position);//if enemy cant see player investigate
 
                 if (enemyLocomotion.hasReachedLastKnownPosition && lookCoroutine == null)
                 {
@@ -68,8 +66,10 @@ public class EnemyAI : MonoBehaviour
                 }
                 if (enemyLocomotion.hasFinishedSearching)
                 {
-                    lookCoroutine = null;
+                    lookCoroutine = null;//turn off look around after enemy is done investigating
+                    enemyLocomotion.ReturnToPatrolPoint();//call to go back to original point 
                     enemyStates = EnemyStates.Patrol;//once enemy finishes search go back to patrol
+                    enemyLocomotion.hasFinishedSearching = false;//make false after enemy goes back to patroling
                 }
                 break;
 
@@ -77,10 +77,14 @@ public class EnemyAI : MonoBehaviour
                 if (enemyFOV.canSeePlayer)
                 {
                     enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);//is enemy can see the player chase them
-                    float distanceToPlayer = Vector3.Distance(transform.position, enemyFOV.playerRef.transform.position);
-                    if (distanceToPlayer <= enemyLocomotion.attackRange)
+                    float distanceToPlayer = Vector3.Distance(transform.position, enemyFOV.playerRef.transform.position);//distance from enemy to player
+                    if (distanceToPlayer <= enemyAttack.attackRange)
                     {
-                        enemyStates = EnemyStates.Attack;
+                        enemyStates = EnemyStates.Attack;//if the enemy is close enough to player begin attack state
+                    }
+                    else
+                    {
+                        enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);
                     }
                 }
                 else
@@ -90,6 +94,12 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case EnemyStates.Attack:
+            //If player is in attack range
+                //Enemy will attack
+                //bool would become true
+            //If player not in attack range 
+                //Enemy will go back to chase state
+                //Bool would become false
                 break;
         }
     }

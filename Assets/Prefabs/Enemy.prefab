@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6619114674185653153}
   - component: {fileID: 4250473489655244892}
   - component: {fileID: 5985058996594818155}
+  - component: {fileID: 5963599625435991047}
   - component: {fileID: 7148906996127112880}
   - component: {fileID: 4016038907627429265}
   - component: {fileID: 6252909987855835056}
@@ -136,6 +137,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
   enemyFOV: {fileID: 4016038907627429265}
   enemyLocomotion: {fileID: 6252909987855835056}
+  enemyAttack: {fileID: 0}
+--- !u!114 &5963599625435991047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753261692016536763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afd60888ea80e3b40bfa9034eaf03b25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
+  enemyAttackDmg: 10
+  attackRange: 5
+  isAttacking: 0
 --- !u!114 &7148906996127112880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,11 +202,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83104a5a9befb9c449bf2da0244da83e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLocomotion
-  points: []
+  points:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   hasReachedLastKnownPosition: 0
   isSearching: 0
   hasFinishedSearching: 0
-  isChasing: 0
+  isWaiting: 0
 --- !u!195 &6803832307656636900
 NavMeshAgent:
   m_ObjectHideFlags: 0
