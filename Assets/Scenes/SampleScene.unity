@@ -144,7 +144,7 @@ Transform:
   m_GameObject: {fileID: 234586727}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.2591803, y: 0, z: 14.798811}
+  m_LocalPosition: {x: -5.88, y: 0, z: 14.798811}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2287,10 +2287,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 1753261692016536763, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4016038907627429265, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
       propertyPath: playerRef
       value: 
@@ -2305,7 +2301,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4850855715528223258, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 9.58
+      value: 6.3
       objectReference: {fileID: 0}
     - target: {fileID: 4850855715528223258, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2766,6 +2762,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3720476598771487838, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
   m_PrefabInstance: {fileID: 7348974151614455779}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1781062410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781062409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95dc97103efb7b54d9a7c3240dbf50c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  currentHealth: 0
+  maxHealth: 100
+  isDead: 0
 --- !u!1 &1810499869
 GameObject:
   m_ObjectHideFlags: 0
@@ -3336,7 +3347,7 @@ Transform:
   m_GameObject: {fileID: 2036132314}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.57, z: 24.87}
+  m_LocalPosition: {x: 13.01, y: 2.57, z: 24.87}
   m_LocalScale: {x: 5.0747, y: 5.0747, z: 5.0747}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3568,7 +3579,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3720476598771487838, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1781062410}
   m_SourcePrefab: {fileID: 100100000, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

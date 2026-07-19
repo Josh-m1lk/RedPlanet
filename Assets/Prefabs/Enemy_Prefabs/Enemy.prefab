@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 4250473489655244892}
   - component: {fileID: 5985058996594818155}
   - component: {fileID: 5963599625435991047}
-  - component: {fileID: 7148906996127112880}
   - component: {fileID: 4016038907627429265}
   - component: {fileID: 6252909987855835056}
   - component: {fileID: 6803832307656636900}
+  - component: {fileID: 3969496150154413708}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -138,6 +138,7 @@ MonoBehaviour:
   enemyFOV: {fileID: 4016038907627429265}
   enemyLocomotion: {fileID: 6252909987855835056}
   enemyAttack: {fileID: 0}
+  health: {fileID: 0}
 --- !u!114 &5963599625435991047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,24 +151,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd60888ea80e3b40bfa9034eaf03b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  enemyAttackDmg: 10
+  attackDmg: 0
   attackRange: 5
   isAttacking: 0
---- !u!114 &7148906996127112880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1753261692016536763}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3cdf329355d9d384c87578408096d44d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  currentHealth: 0
-  maxHealth: 100
-  isDead: 0
+  enemyFOV: {fileID: 0}
+  enemyLocomotion: {fileID: 0}
 --- !u!114 &4016038907627429265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,7 +169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFOV
   radius: 20
-  angle: 270
+  angle: 141
+  distanceToTarget: 0
   playerRef: {fileID: 0}
   targetMask:
     serializedVersion: 2
@@ -202,6 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83104a5a9befb9c449bf2da0244da83e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLocomotion
+  agent: {fileID: 0}
   points:
   - {fileID: 0}
   - {fileID: 0}
@@ -233,6 +223,21 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3969496150154413708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1753261692016536763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89124f65ec2dafc4398ec6683825f5a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  currentHealth: 0
+  maxHealth: 100
+  isDead: 0
 --- !u!1 &4733467673858461895
 GameObject:
   m_ObjectHideFlags: 0

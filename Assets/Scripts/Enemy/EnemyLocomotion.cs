@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class EnemyLocomotion : MonoBehaviour
 {
     [Header("References")]
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     [SerializeField] Transform[] points;
     private Quaternion leftRotation;
     private Quaternion rightRotation;
@@ -101,11 +101,12 @@ public class EnemyLocomotion : MonoBehaviour
 
     public IEnumerator LookAround()
     {
+        //enemy currently searching 
         hasFinishedSearching = false;
         isSearching = true;
 
         float lookAngle = 45f;//lookangle is 45 degrees 
-        float searching = 2.5f;
+        float searching = 2.5f;//how long to search
         WaitForSeconds look = new WaitForSeconds(searching);
 
         //creates left and right rotation, sets the start rotation
@@ -121,6 +122,7 @@ public class EnemyLocomotion : MonoBehaviour
         yield return StartCoroutine(RotateTo(rightRotation));
         yield return look;
 
+        //enemy finished searching
         isSearching = false;
         hasFinishedSearching = true;
     }

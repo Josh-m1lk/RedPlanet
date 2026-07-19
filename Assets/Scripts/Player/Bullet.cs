@@ -8,12 +8,12 @@ public class Bullet : MonoBehaviour
     public Rigidbody rb;
 
     [Header("Settings")]
-    public int bulletDamage = 0;
+    public float bulletDamage = 0;
     public float bulletSpeed = 0f;
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Health health))
+        if (other.TryGetComponent(out EnemyHealth health))
         {
             health.TakeDamage(bulletDamage);
             Destroy(gameObject);

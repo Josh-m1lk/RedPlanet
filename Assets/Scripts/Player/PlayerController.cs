@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("References")]
     private Rigidbody rb;
-    private Camera cam;
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -29,7 +28,6 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        cam = GetComponent<Camera>();
     }
 
     void FixedUpdate()
@@ -70,7 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         //Make ground plane and create a ray towards the mouse pointer
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
-        Ray ray = cam.ScreenPointToRay(mouseLook);
+        Ray ray = Camera.main.ScreenPointToRay(mouseLook);
 
         //Player turn towards wherever ground plane is
         if (groundPlane.Raycast(ray, out float enter))

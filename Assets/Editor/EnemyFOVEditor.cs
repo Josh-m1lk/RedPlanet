@@ -6,21 +6,26 @@ public class EnemyFOVEditor : Editor
 {
     public void OnSceneGUI()
     {
-        EnemyFOV fov = (EnemyFOV)target;
+        EnemyFOV enemyFOV = (EnemyFOV)target;//grab the target
+
+        //Draw detecion radius
         Handles.color = Color.white;
-        Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.radius);
+        Handles.DrawWireArc(enemyFOV.transform.position, Vector3.up, Vector3.forward, 360, enemyFOV.radius);
 
-        Vector3 viewAngle1 = DirectionFromAngle(fov.transform.eulerAngles.y, -fov.angle / 2);
-        Vector3 viewAngle2 = DirectionFromAngle(fov.transform.eulerAngles.y, fov.angle / 2);
+        //Triangle lines for both sides of triangle
+        Vector3 viewAngle1 = DirectionFromAngle(enemyFOV.transform.eulerAngles.y, -enemyFOV.angle / 2);
+        Vector3 viewAngle2 = DirectionFromAngle(enemyFOV.transform.eulerAngles.y, enemyFOV.angle / 2);
 
+        //Draw the vision cone lines 
         Handles.color = Color.yellow;
-        Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle1 * fov.radius);
-        Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle2 * fov.radius);
+        Handles.DrawLine(enemyFOV.transform.position, enemyFOV.transform.position + viewAngle1 * enemyFOV.radius);
+        Handles.DrawLine(enemyFOV.transform.position, enemyFOV.transform.position + viewAngle2 * enemyFOV.radius);
 
-        if(fov.canSeePlayer)
+        if(enemyFOV.canSeePlayer)
         {
+            //If player is seen draw a line towards it
             Handles.color = Color.red;
-            Handles.DrawLine(fov.transform.position, fov.playerRef.transform.position);
+            Handles.DrawLine(enemyFOV.transform.position, enemyFOV.playerRef.transform.position);
         }
     }
 

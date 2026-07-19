@@ -8,8 +8,9 @@ public class EnemyFOV : MonoBehaviour
     public float radius = 0f;
     [Range(0, 360)]
     public float angle = 0f;
+    public float distanceToTarget;
 
-    [Header("ReferencedObjects")]
+    [Header("References")]
     public GameObject playerRef;
 
     [Header("LayerMasks")]
@@ -47,7 +48,7 @@ public class EnemyFOV : MonoBehaviour
 
             if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)//is obj inside vision cone
             {
-                float distanceToTarget = Vector3.Distance(transform.position, target.position);//if so how far 
+                distanceToTarget = Vector3.Distance(transform.position, target.position);//if so how far 
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))//is there no wall between me and the target
                 {

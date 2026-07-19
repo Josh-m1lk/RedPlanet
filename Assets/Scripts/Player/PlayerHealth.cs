@@ -1,28 +1,22 @@
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class PlayerHealth : MonoBehaviour
 {
-    [Header("Health")]
+    [Header("Settings")]
     public float currentHealth;
     public float maxHealth = 100f;
     [SerializeField]private bool isDead = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
     void Start()
     {
         currentHealth = maxHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(float dmgAmount)
     {
-        
-    }
+        if (isDead) return;//if alr dead don't do anything
 
-    public void TakeDamage(int dmgAmount)
-    {
-        if (isDead) return;//if alr dead dont do this
-
-        currentHealth -= dmgAmount;//subtract from health
+        currentHealth -= dmgAmount;//subtract from current health
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);//clamp health to 0 so to not go below
         if (currentHealth <= 0)
         {

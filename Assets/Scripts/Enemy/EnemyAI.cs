@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EnemyStates
@@ -19,6 +20,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] EnemyFOV enemyFOV;
     [SerializeField] EnemyLocomotion enemyLocomotion;
     [SerializeField] EnemyAttack enemyAttack;
+    [SerializeField] PlayerHealth health;
 
     void Awake()
     {
@@ -34,6 +36,10 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
+        if (enemyFOV.canSeePlayer)
+        {
+            targetLastSeen = enemyFOV.playerRef.transform.position;
+        }
         switch (enemyStates)
         {
             case EnemyStates.Patrol:
@@ -58,7 +64,7 @@ public class EnemyAI : MonoBehaviour
                     break;
                 } 
 
-                enemyLocomotion.Investigate(enemyFOV.playerRef.transform.position);//if enemy cant see player investigate
+                enemyLocomotion.Investigate(targetLastSeen);//if enemy cant see player investigate
 
                 if (enemyLocomotion.hasReachedLastKnownPosition && lookCoroutine == null)
                 {
@@ -77,10 +83,10 @@ public class EnemyAI : MonoBehaviour
                 if (enemyFOV.canSeePlayer)
                 {
                     enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);//is enemy can see the player chase them
-                    float distanceToPlayer = Vector3.Distance(transform.position, enemyFOV.playerRef.transform.position);//distance from enemy to player
-                    if (distanceToPlayer <= enemyAttack.attackRange)
+                    if (enemyFOV.distanceToTarget <= enemyAttack.attackRange)//if player is close enough
                     {
-                        enemyStates = EnemyStates.Attack;//if the enemy is close enough to player begin attack state
+                        enemyAttack.isAttacking = true;
+                        enemyStates = EnemyStates.Attack;//Attack
                     }
                     else
                     {
@@ -94,12 +100,13 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case EnemyStates.Attack:
-            //If player is in attack range
-                //Enemy will attack
-                //bool would become true
-            //If player not in attack range 
-                //Enemy will go back to chase state
-                //Bool would become false
+                if (enemyAttack.isAttacking)
+                    {
+                        //enemyAttack.Attack();//Enemy will attack
+                    }
+                //If player not in attack range 
+                    //Enemy will go back to chase state
+                    //Bool would become false
                 break;
         }
     }
