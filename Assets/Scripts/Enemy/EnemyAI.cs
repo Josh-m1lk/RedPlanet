@@ -20,14 +20,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] EnemyFOV enemyFOV;
     [SerializeField] EnemyLocomotion enemyLocomotion;
     [SerializeField] EnemyAttack enemyAttack;
-    [SerializeField] PlayerHealth playerHealth;
 
     void Awake()
     {
         enemyFOV = GetComponent<EnemyFOV>();
         enemyLocomotion = GetComponent<EnemyLocomotion>();
         enemyAttack = GetComponent<EnemyAttack>();
-        playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Start()

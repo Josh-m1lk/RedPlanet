@@ -3,13 +3,16 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [Header("References")]
-    public GameObject bulletPrefab;
-    public Transform bulletSpawn;
-    public Rigidbody rb;
+    private Rigidbody rb;
 
     [Header("Settings")]
     public float bulletDamage = 0;
     public float bulletSpeed = 0f;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     public void OnTriggerEnter(Collider other)
     {
@@ -21,7 +24,7 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    public void BulletSpawn()
+    public void BulletMovement()
     {
         if (rb != null)
         {

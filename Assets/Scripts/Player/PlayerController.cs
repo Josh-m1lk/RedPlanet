@@ -3,17 +3,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [Header("Movement")]
+    [Header("Settings")]
     [SerializeField] float speed = 0f;
+    [SerializeField] float rotationSpeed = 0f;
 
     [Header("Input")]
     private Vector2 moveInput, mouseLook;
 
-    [Header("Rotation")]
-    private Vector3 rotationTarget;
-
     [Header("References")]
     private Rigidbody rb;
+    private Vector3 rotationTarget;
 
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -60,7 +59,7 @@ public class PlayerController : MonoBehaviour
         if (lookDirection != Vector3.zero)
         {
             //if aim direction exists face that way and smoothly turn player
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 0.15f * Time.deltaTime);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotationSpeed * Time.deltaTime);
         }
     }
 

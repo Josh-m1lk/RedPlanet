@@ -29,9 +29,11 @@ public class PlayerShooting : MonoBehaviour
         if (Time.time > nextFireTime && ammoCount > 0)
         {
             nextFireTime = Time.time + fireRate;//how long you have to wait in between shots
-            //Create new bullet and for each new one get rb
+            //Create new bullet
             GameObject newBullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);//Create new bullet
-            
+
+            Bullet newBulletScript = newBullet.GetComponent<Bullet>();
+            newBulletScript.BulletMovement();
             ammoCount--;
             Destroy(newBullet, 2f);//destroy after 2 seconds
         } 

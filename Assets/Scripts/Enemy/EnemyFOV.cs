@@ -12,7 +12,6 @@ public class EnemyFOV : MonoBehaviour
 
     [Header("References")]
     public GameObject playerRef;
-    private Collider[] hitColliders;
 
     [Header("LayerMasks")]
     public LayerMask targetMask;
@@ -39,16 +38,16 @@ public class EnemyFOV : MonoBehaviour
 
     private void FieldOfViewRoutine()
     {
-        int rangeChecks = Physics.OverlapSphereNonAlloc(transform.position, radius, hitColliders, targetMask);//checks for layers in collider range
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);//checks for layers in collider range
 
         //If enemy does not detect anything in sphere return false
-        if (rangeChecks == 0)
+        if (rangeChecks.Length == 0)
         {
             canSeePlayer = false;
             return;
         }
 
-        Transform target = hitColliders[0].transform;//grab first detected obj
+        Transform target = rangeChecks[0].transform;//grab first detected obj
         Vector3 directionToTarget = (target.position - transform.position).normalized;//what direction is the target
 
         //If player is outside of vision cone return false
