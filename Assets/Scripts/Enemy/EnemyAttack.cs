@@ -7,7 +7,8 @@ public class EnemyAttack : MonoBehaviour
 {
     [Header("Settings")]
     public float attackDmg = 0f;
-    public float attackRange = 0f;
+    public float attackDistance = 0f;//How close player needs to be before attack happens
+    private float attackRange = 0f;//How far attack hits
     public bool isAttacking = false;
     private int maxColliders = 1;
 
@@ -16,24 +17,27 @@ public class EnemyAttack : MonoBehaviour
 
     [Header("ScriptReferences")]
     [SerializeField] EnemyFOV enemyFOV;
-    [SerializeField] EnemyLocomotion enemyLocomotion;
 
     void Awake()
     {
         hitColliders = new Collider[maxColliders];//initialize array once
     }
 
-    public void Attack(Collider other)
+    public void Attack()
     {
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemyFOV.targetMask);
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemyFOV.targetMask);//Determines how big hit detection sphere is
 
-        if (hitColliders[0].TryGetComponent(out PlayerHealth health))
+        if (hits > 0)//Did sphere detect at least 1 collider
         {
-            enemyLocomotion.agent.isStopped = true;
-            //play animation
-            health.TakeDamage(attackDmg);
-            isAttacking = true;
+            if (hitColliders[0].TryGetComponent(out PlayerHealth health))//does it belong to the thing that has health script
+            {
+                //play animation, do damage, and set bool to true
+                //play animation
+                health.TakeDamage(attackDmg);
+                isAttacking = true;
+            }
         }
+        
     }
 
     //Make an attack radius to detect if player is in it

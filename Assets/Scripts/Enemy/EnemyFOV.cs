@@ -12,6 +12,7 @@ public class EnemyFOV : MonoBehaviour
 
     [Header("References")]
     public GameObject playerRef;
+    private Collider[] hitColliders;
 
     [Header("LayerMasks")]
     public LayerMask targetMask;
@@ -21,7 +22,6 @@ public class EnemyFOV : MonoBehaviour
     
     void Start()
     {
-        //playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
     }
 
@@ -39,34 +39,34 @@ public class EnemyFOV : MonoBehaviour
 
     private void FieldOfViewRoutine()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);//checks for layers in collider range
+        int rangeChecks = Physics.OverlapSphereNonAlloc(transform.position, radius, hitColliders, targetMask);//checks for layers in collider range
 
-        if (rangeChecks.Length != 0)//did I detect something
-        {
-            Transform target = rangeChecks[0].transform;//grab first detected obj
-            Vector3 directionToTarget = (target.position - transform.position).normalized;//what direction is the target
-
-            if (Vector3.Angle(transform.forward, directionToTarget) < angle / 2)//is obj inside vision cone
-            {
-                distanceToTarget = Vector3.Distance(transform.position, target.position);//if so how far 
-
-                if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))//is there no wall between me and the target
-                {
-                    canSeePlayer = true;
-                }
-                else
-                {
-                    canSeePlayer = false;
-                }
-            }
-            else
-            {
-                canSeePlayer = false;
-            }
-        }
-        else if (canSeePlayer)
+        //If enemy does not detect anything in sphere return false
+        if (rangeChecks == 0)
         {
             canSeePlayer = false;
+            return;
         }
+
+        Transform target = hitColliders[0].transform;//grab first detected obj
+        Vector3 directionToTarget = (target.position - transform.position).normalized;//what direction is the target
+
+        //If player is outside of vision cone return false
+        if (Vector3.Angle(transform.forward, directionToTarget) >= angle / 2)
+        {
+            canSeePlayer = false;
+            return;
+        }
+
+        distanceToTarget = Vector3.Distance(transform.position, target.position);//if so how far 
+
+        //if there is a wall between enemy and player, return false
+        if (Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
+        {
+            canSeePlayer = false;
+            return;
+        }
+
+        canSeePlayer = true;
     }
 }

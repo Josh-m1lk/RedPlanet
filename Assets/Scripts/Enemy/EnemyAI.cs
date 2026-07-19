@@ -20,18 +20,19 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] EnemyFOV enemyFOV;
     [SerializeField] EnemyLocomotion enemyLocomotion;
     [SerializeField] EnemyAttack enemyAttack;
-    [SerializeField] PlayerHealth health;
+    [SerializeField] PlayerHealth playerHealth;
 
     void Awake()
     {
         enemyFOV = GetComponent<EnemyFOV>();
         enemyLocomotion = GetComponent<EnemyLocomotion>();
         enemyAttack = GetComponent<EnemyAttack>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Start()
     {
-        enemyLocomotion.GoToNextPatrolPoint();
+        enemyLocomotion.GoToNextPatrolPoint();//enemy will go to first patrol point when game starts
     }
 
     void Update()
@@ -45,8 +46,9 @@ public class EnemyAI : MonoBehaviour
             case EnemyStates.Patrol:
                 if (enemyFOV.canSeePlayer)
                 {
+                    //if player is seen in patrol state transition to chase state 
                     enemyStates = EnemyStates.Chase;
-                    break;//if player is seen in patrol state transition to chase state 
+                    break;
                 }
                 
                 enemyLocomotion.Patrol();//activate patrol state 
@@ -57,8 +59,9 @@ public class EnemyAI : MonoBehaviour
                 {
                     if (lookCoroutine != null)
                     {
-                        StopCoroutine(lookCoroutine);//if enemy sees player stop the coroutine
-                        enemyLocomotion.isSearching = false;//set search to false so to not stay true forever
+                        //Stop the coroutine and set searching to false
+                        StopCoroutine(lookCoroutine);
+                        enemyLocomotion.isSearching = false;
                     }
                     enemyStates = EnemyStates.Chase;//enemy goes into chase state after coroutine is stopped
                     break;
@@ -83,14 +86,16 @@ public class EnemyAI : MonoBehaviour
                 if (enemyFOV.canSeePlayer)
                 {
                     enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);//is enemy can see the player chase them
-                    if (enemyFOV.distanceToTarget <= enemyAttack.attackRange)//if player is close enough
+                    if (enemyFOV.distanceToTarget <= enemyAttack.attackDistance)//if player is close enough
                     {
+                        //stop enemy and go to attack state
+                        enemyLocomotion.agent.isStopped = true;
                         enemyAttack.isAttacking = true;
-                        enemyStates = EnemyStates.Attack;//Attack
+                        enemyStates = EnemyStates.Attack;
                     }
                     else
                     {
-                        enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);
+                        enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);//Go back to chase state if outside of range
                     }
                 }
                 else
@@ -100,13 +105,17 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case EnemyStates.Attack:
-                if (enemyAttack.isAttacking)
-                    {
-                        //enemyAttack.Attack();//Enemy will attack
-                    }
-                //If player not in attack range 
-                    //Enemy will go back to chase state
-                    //Bool would become false
+                if (enemyFOV.distanceToTarget > enemyAttack.attackDistance)//if player is outside of attack range
+                {
+                    //enemy is no longer attacking and goes back to chase
+                    enemyLocomotion.agent.isStopped = false;
+                    enemyAttack.isAttacking = false;
+                    enemyStates = EnemyStates.Chase;
+
+                    break;
+                }
+
+                enemyAttack.Attack();
                 break;
         }
     }
