@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Pool;
@@ -5,37 +6,50 @@ using UnityEngine.Pool;
 public class PlayerShooting : MonoBehaviour
 {
     [Header("Bullet")]
-    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] BulletPool bulletPool;
     [SerializeField]Transform bulletSpawn;
 
     [Header("Settings")]
     [SerializeField] float fireRate = 0f;
-    [SerializeField] int ammoCount = 0;
+    [SerializeField] int maxMag = 0;
+    [SerializeField] int reserveAmmo = 0;
+    private int currentMag;
 
-    public ObjectPool<Bullet> objectPool {get; private set;}
+    [Header("ScriptReferences")]
+    [SerializeField] AmmoUI ammoUI;
 
     private float nextFireTime;
 
-    public void OnClick(InputAction.CallbackContext context)
+    void Awake()
+    {
+        currentMag = maxMag;
+        ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);
+    }
+
+    public void OnShoot(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            Fire();//if left click is pressed perform fire
+            Shoot();
         }
     }
 
-    public void Fire()
+    public void Shoot()
     {
-        if (Time.time > nextFireTime && ammoCount > 0)
+        if (Time.time > nextFireTime && currentMag > 0)
         {
             nextFireTime = Time.time + fireRate;//how long you have to wait in between shots
-            //Create new bullet
-            GameObject newBullet = Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);//Create new bullet
+            
+            Bullet bullet = bulletPool.GetBullet();//Get bullet from pool
 
-            Bullet newBulletScript = newBullet.GetComponent<Bullet>();
-            newBulletScript.BulletMovement();
-            ammoCount--;
-            Destroy(newBullet, 2f);//destroy after 2 seconds
+            //Get bullet spawn pos and rot
+            bullet.transform.position = bulletSpawn.position;
+            bullet.transform.rotation = bulletSpawn.rotation;
+
+            bullet.Fire();//Call fire function after player shoots
+
+            currentMag--;//decrease ammo count in mag
+            ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);
         } 
     }
 }

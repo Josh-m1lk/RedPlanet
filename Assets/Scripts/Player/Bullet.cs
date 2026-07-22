@@ -4,6 +4,7 @@ public class Bullet : MonoBehaviour
 {
     [Header("References")]
     private Rigidbody rb;
+    private BulletPool bulletPool;
 
     [Header("Settings")]
     public float bulletDamage = 0;
@@ -14,17 +15,22 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody>();
     }
 
+    public void SetPool(BulletPool pool)
+    {
+        bulletPool = pool;
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out EnemyHealth health))
         {
-            health.TakeDamage(bulletDamage);
-            Destroy(gameObject);
-            //if health exists do dmg and destroy on impact
+            health.TakeDamage(bulletDamage);//do damage to obj
         }
+
+        bulletPool.ReturnBullet(this);//Return bullet to pool
     }
 
-    public void BulletMovement()
+    public void Fire()
     {
         if (rb != null)
         {

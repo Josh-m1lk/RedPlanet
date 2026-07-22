@@ -7,7 +7,7 @@ public class PlayerHealth : MonoBehaviour
     public float maxHealth = 100f;
     [SerializeField]private bool isDead = false;
     
-    void Start()
+    void Awake()
     {
         currentHealth = maxHealth;
     }
