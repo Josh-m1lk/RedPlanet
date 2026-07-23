@@ -22,6 +22,7 @@ public class Bullet : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        Debug.Log("I hit: " + other.gameObject);
         if (other.TryGetComponent(out EnemyHealth health))
         {
             health.TakeDamage(bulletDamage);//do damage to obj

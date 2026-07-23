@@ -1,42 +1,53 @@
+using System.Collections;
 using UnityEngine;
+
+public enum GameStates
+{
+    Playing, 
+    Pause,
+    GameOver,
+    Victory
+}
 
 public class GameManager : MonoBehaviour
 {
-    /*[Header("References")]
-    public static GameManager gameManager { get; private set; }
-
-    [Header("GameStates")]
-    private bool gameOver;
-    private bool startGame;
+    /*public static GameManager Instance;
+    public GameStates gameState;
+    [SerializeField] LevelManager levelManager;
 
     void Awake()
     {
-        if (gameManager == null)
-        {
-            DontDestroyOnLoad(gameManager);
-        }
-        else
-        {
-            Destroy(gameManager);
-        }
+        Instance = this;
+        gameState = GameStates.Playing;
     }
 
-    void Update()
+    public void StartGame()
     {
-        
+        gameState = GameStates.Playing;
     }
 
-    public void StartGameState()
+    public void PauseGame()
     {
-        //Controls if the game has started
-        //Create a countdown timer from 3 seconds going down to give player time to prepare
-        //If game has started enable player controls after countdown is done
+        gameState = GameStates.Pause;
     }
 
-    public void GameOverState()
+    public void PlayerDied()
     {
-        //Controls if the game is over
-        //If the player dies with no lives game will end
-        //If the player has completed all of the levels the game will also end
+        gameState = GameStates.GameOver;
+
+        levelManager.RestartLevel();
+    }
+
+    public void LevelComplete()
+    {
+        gameState = GameStates.Victory;
+
+    }
+
+    public IEnumerator RestartLevelDelay()
+    {
+        float restartDelay = 5f;
+
+        yield return new WaitForSeconds(restartDelay);
     }*/
 }

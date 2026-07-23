@@ -2,14 +2,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-/*public interface IInteractable
+public interface IInteractable
 {
     void Interact();
 }
 
 public class PlayerInteract : MonoBehaviour
 {
-    [SerializeField] TextMeshPro interactText;
+    /*[SerializeField] TextMeshPro interactText;
     private float interactionRange = 0f;
     [SerializeField] LayerMask interactLayer;
     private Collider[] colliders;
@@ -34,5 +34,5 @@ public class PlayerInteract : MonoBehaviour
         {
             //if (colliders.TryGetComponent(IInteractable))
         }
-    }
-}*/
+    }*/
+}

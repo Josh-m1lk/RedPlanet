@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,7 @@ public class EnemyLocomotion : MonoBehaviour
     private float waitTime = 2f;
     private float patrolStoppingDistance = 0.5f;
     private float investigateStoppingDistance = 1f;
+    public float attackDistance = 2f;
 
     public bool hasReachedLastKnownPosition = false;
     public bool isSearching = false;
@@ -30,13 +32,19 @@ public class EnemyLocomotion : MonoBehaviour
         agent.autoBraking = false;//disable for continous movement 
     }
 
-    void Start()
+    public void ResumeMoving()
     {
+        agent.isStopped = false;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StopMoving()
     {
+        agent.isStopped = true;
+    }
+
+    public void SetStoppingDistance(float distance)
+    {
+        agent.stoppingDistance = distance;
     }
 
     public void Patrol()
@@ -87,11 +95,11 @@ public class EnemyLocomotion : MonoBehaviour
     public IEnumerator WaitAtPatrolPoint()
     {
         isWaiting = true;
-        agent.isStopped = true;
+        StopMoving();
 
         yield return new WaitForSeconds(waitTime);//enemy will wait at the current patrol point for x time
 
-        agent.isStopped = false;
+        ResumeMoving();
 
         destinationPoint = (destinationPoint + 1) % points.Length;//next point in array will become destination
         GoToNextPatrolPoint();
@@ -135,5 +143,11 @@ public class EnemyLocomotion : MonoBehaviour
 
             yield return null;//wait one frame before doing it again
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, attackDistance);
     }
 }

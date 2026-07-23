@@ -6,14 +6,16 @@ using UnityEngine.AI;
 public class EnemyAttack : MonoBehaviour
 {
     [Header("Settings")]
-    public float attackDmg = 0f;
-    public float attackDistance = 0f;//How close player needs to be before attack happens
-    private float attackRange = 0f;//How far attack hits
+    public float attackDmg = 20f;
+    public float attackRange = 1.5f;//How far attack hits
     public bool isAttacking = false;
-    private int maxColliders = 1;
+    private int maxColliders = 5;
+    [SerializeField] float nextAttackTime;
+    [SerializeField] float attackCooldown = 1f;
 
     [Header("References")]
     private Collider[] hitColliders;
+    [SerializeField] Transform attackPoint;
 
     [Header("ScriptReferences")]
     [SerializeField] EnemyFOV enemyFOV;
@@ -25,19 +27,31 @@ public class EnemyAttack : MonoBehaviour
 
     public void Attack()
     {
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemyFOV.targetMask);//Determines how big hit detection sphere is
+        if (Time.time < nextAttackTime) return;//Leave func if not enough time has passed
 
-        if (hits > 0)//Did sphere detect at least 1 collider
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemyFOV.targetMask);//Determines how big hit detection sphere is
+        
+        if (hits == 0) return;//If nothing detected return nothing
+
+        for (int i = 0; i < hits; i++)
         {
-            if (hitColliders[0].TryGetComponent(out PlayerHealth health))//does it belong to the thing that has health script
+            PlayerHealth playerHealth = hitColliders[i].GetComponentInParent<PlayerHealth>();//Does the coliider have player health
+            if (playerHealth)
             {
                 //play animation, do damage, and set bool to true
                 //play animation
-                health.TakeDamage(attackDmg);
+                nextAttackTime = Time.time + attackCooldown;//how fast enemy can attack
+                playerHealth.TakeDamage(attackDmg);
                 isAttacking = true;
+                break;
             }
         }
-        
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 
     //Make an attack radius to detect if player is in it

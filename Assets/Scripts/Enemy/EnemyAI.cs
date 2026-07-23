@@ -81,39 +81,47 @@ public class EnemyAI : MonoBehaviour
                 break;
 
             case EnemyStates.Chase:
-                if (enemyFOV.canSeePlayer)
-                {
-                    enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);//is enemy can see the player chase them
-                    if (enemyFOV.distanceToTarget <= enemyAttack.attackDistance)//if player is close enough
-                    {
-                        //stop enemy and go to attack state
-                        enemyLocomotion.agent.isStopped = true;
-                        enemyAttack.isAttacking = true;
-                        enemyStates = EnemyStates.Attack;
-                    }
-                    else
-                    {
-                        enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);//Go back to chase state if outside of range
-                    }
-                }
-                else
+                if (!enemyFOV.canSeePlayer)
                 {
                     enemyStates = EnemyStates.Investigate;
+                    break;
                 }
+
+                enemyLocomotion.SetStoppingDistance(enemyLocomotion.attackDistance);
+
+                if (enemyFOV.distanceToTarget <= enemyLocomotion.attackDistance)//if player is close enough
+                {
+                    Debug.Log("Enemy switch to attack");
+                    //stop enemy and go to attack state
+                    enemyLocomotion.StopMoving();
+                    enemyStates = EnemyStates.Attack;
+                    break;
+                }
+                
+                enemyLocomotion.ResumeMoving();
+                enemyLocomotion.Chase(enemyFOV.playerRef.transform.position);//Go back to chase state if outside of range
                 break;
 
             case EnemyStates.Attack:
-                if (enemyFOV.distanceToTarget > enemyAttack.attackDistance)//if player is outside of attack range
+                if (!enemyFOV.canSeePlayer)
+                {
+                    enemyAttack.isAttacking = false; 
+                    enemyLocomotion.ResumeMoving();
+                    enemyStates = EnemyStates.Investigate;
+                    break;
+                }
+
+                if (enemyFOV.distanceToTarget > enemyLocomotion.attackDistance)//if player is outside of attack range
                 {
                     //enemy is no longer attacking and goes back to chase
-                    enemyLocomotion.agent.isStopped = false;
+                    enemyLocomotion.ResumeMoving();
                     enemyAttack.isAttacking = false;
                     enemyStates = EnemyStates.Chase;
-
                     break;
                 }
 
                 enemyAttack.Attack();
+                enemyLocomotion.StopMoving();
                 break;
         }
     }
