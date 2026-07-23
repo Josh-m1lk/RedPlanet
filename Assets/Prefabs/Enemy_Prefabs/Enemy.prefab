@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 6252909987855835056}
   - component: {fileID: 6803832307656636900}
   - component: {fileID: 3969496150154413708}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,9 +149,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd60888ea80e3b40bfa9034eaf03b25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttack
-  attackDmg: 0
-  attackDistance: 0
+  attackDmg: 20
+  attackRange: 5.2
   isAttacking: 0
+  nextAttackTime: 0
+  attackCooldown: 1
+  attackPoint: {fileID: 9190837564723087004}
   enemyFOV: {fileID: 4016038907627429265}
 --- !u!114 &4016038907627429265
 MonoBehaviour:
@@ -188,12 +191,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83104a5a9befb9c449bf2da0244da83e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLocomotion
-  agent: {fileID: 0}
+  agent: {fileID: 6803832307656636900}
   points:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  attackDistance: 5
   hasReachedLastKnownPosition: 0
   isSearching: 0
   hasFinishedSearching: 0
@@ -247,7 +251,7 @@ GameObject:
   - component: {fileID: 3800406706151070075}
   - component: {fileID: 2146962835216203146}
   - component: {fileID: 715946928506352631}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: lefteye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +363,7 @@ GameObject:
   - component: {fileID: 5563340357856514863}
   - component: {fileID: 3187071695531316786}
   - component: {fileID: 6278674603526507561}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: righteye
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -471,7 +475,7 @@ GameObject:
   - component: {fileID: 1945050007356099398}
   - component: {fileID: 8960464964525552660}
   - component: {fileID: 5427110201064856366}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: leftarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +584,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9097240863178492767}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Eyes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -613,7 +617,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9190837564723087004}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -629,7 +633,7 @@ Transform:
   m_GameObject: {fileID: 7996066689617356467}
   serializedVersion: 2
   m_LocalRotation: {x: -0.00000038743013, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -649,7 +653,7 @@ GameObject:
   - component: {fileID: 3064365431051603785}
   - component: {fileID: 8696074906797868420}
   - component: {fileID: 6015175568984151150}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: rightarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

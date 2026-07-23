@@ -11,13 +11,13 @@ public enum GameStates
 
 public class GameManager : MonoBehaviour
 {
-    /*public static GameManager Instance;
+    public static GameManager instance;
     public GameStates gameState;
     [SerializeField] LevelManager levelManager;
 
     void Awake()
     {
-        Instance = this;
+        instance = this;
         gameState = GameStates.Playing;
     }
 
@@ -49,5 +49,5 @@ public class GameManager : MonoBehaviour
         float restartDelay = 5f;
 
         yield return new WaitForSeconds(restartDelay);
-    }*/
+    }
 }
