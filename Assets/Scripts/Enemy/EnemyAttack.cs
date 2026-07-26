@@ -32,7 +32,7 @@ public class EnemyAttack : MonoBehaviour
         int hits = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemyFOV.targetMask);//Determines how big hit detection sphere is
         
         if (hits == 0) return;//If nothing detected return nothing
-
+        Debug.Log("I got detected");
         for (int i = 0; i < hits; i++)
         {
             PlayerHealth playerHealth = hitColliders[i].GetComponentInParent<PlayerHealth>();//Does the coliider have player health
@@ -40,6 +40,7 @@ public class EnemyAttack : MonoBehaviour
             {
                 //play animation, do damage, and set bool to true
                 //play animation
+                Debug.Log("I got hit");
                 nextAttackTime = Time.time + attackCooldown;//how fast enemy can attack
                 playerHealth.TakeDamage(attackDmg);
                 isAttacking = true;

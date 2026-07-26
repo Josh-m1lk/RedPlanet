@@ -119,9 +119,12 @@ public class EnemyAI : MonoBehaviour
                     enemyStates = EnemyStates.Chase;
                     break;
                 }
-
-                enemyAttack.Attack();
-                enemyLocomotion.StopMoving();
+                
+                if (enemyFOV.canSeePlayer)
+                {
+                    enemyAttack.Attack();
+                    enemyLocomotion.StopMoving();
+                }
                 break;
         }
     }

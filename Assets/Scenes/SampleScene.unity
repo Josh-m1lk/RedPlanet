@@ -4455,14 +4455,34 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 627726562}
+    - target: {fileID: 2679431446778038264, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 4b7be317ffb49654dac250f6d5ed7b8c, type: 2}
     - target: {fileID: 4180372887175045879, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
       propertyPath: ammoUI
       value: 
       objectReference: {fileID: 1318965486}
     - target: {fileID: 4180372887175045879, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: maxMag
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180372887175045879, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
       propertyPath: bulletPool
       value: 
       objectReference: {fileID: 1288864729}
+    - target: {fileID: 4180372887175045879, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: reserveAmmo
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364409237436362709, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4364409237436362709, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4393010450832139520, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4506,6 +4526,14 @@ PrefabInstance:
     - target: {fileID: 6100904917229125102, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
       propertyPath: m_Name
       value: PlayerPackage
+      objectReference: {fileID: 0}
+    - target: {fileID: 8158802453005197026, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8594256739253439246, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: speed
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

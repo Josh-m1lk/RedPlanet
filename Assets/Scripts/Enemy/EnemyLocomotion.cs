@@ -40,6 +40,7 @@ public class EnemyLocomotion : MonoBehaviour
     public void StopMoving()
     {
         agent.isStopped = true;
+        agent.velocity = Vector3.zero;
     }
 
     public void SetStoppingDistance(float distance)
