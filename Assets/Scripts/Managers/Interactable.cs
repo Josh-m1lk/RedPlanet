@@ -1,17 +1,36 @@
+using NUnit.Framework;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
-public interface IInteractable
+public class Interactable : MonoBehaviour, IInteractable
 {
-    void Interact();
-}
+    [SerializeField] TextMeshProUGUI interactionPrompt;
+    [SerializeField] Outline outline;
+    [SerializeField] UnityEvent onInteract;
+    private bool isInteractable = false;
+    public bool CanInteract() => isInteractable;
 
-public class Interactable : MonoBehaviour
-{
-    [SerializeField] TextMeshPro interactableText;
-    
-    public void InteractText()
+    void Awake()
     {
-        interactableText.text = "Press E to pick up";
+        outline = GetComponent<Outline>();
+        outline.OutlineColor = Color.yellow;
+        outline.OutlineWidth = 1f;
+        outline.enabled = false;
+    }
+
+    void IInteractable.Interact()
+    {
+        onInteract?.Invoke();
+    }
+
+    void IInteractable.OnFocusGain()
+    {
+        outline.enabled = true;
+    }
+
+    void IInteractable.OnFocusLose()
+    {
+        outline.enabled = false;
     }
 }

@@ -16,19 +16,13 @@ public class PlayerShooting : MonoBehaviour
     [Header("Settings")]
     [SerializeField] float fireRate = 0f;
     [SerializeField] int maxMag = 0;
-    [SerializeField] int reserveAmmo = 0;
+    [SerializeField]public int reserveAmmo = 0;
 
     private int currentMag;
     private float nextFireTime;
     //private bool isShooting = false;
     private bool isReloading = false;
     private float reloadDelay = 2;
-
-    void Awake()
-    {
-        currentMag = maxMag;
-        ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);
-    }
 
     public void OnShoot(InputAction.CallbackContext context)
     {
@@ -44,6 +38,12 @@ public class PlayerShooting : MonoBehaviour
         {
             Reload();//When R is pressed call reload
         }
+    }
+
+    void Awake()
+    {
+        currentMag = maxMag;
+        ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);
     }
 
     public void Shoot()
