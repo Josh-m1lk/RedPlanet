@@ -3,10 +3,18 @@ using UnityEngine;
 public class AmmoPickup : MonoBehaviour
 {
     [SerializeField] PlayerShooting playerShooting;
-    private int collectedAmmo;
+    [SerializeField] AmmoUI ammoUI;
+    public int collectedAmmo;
+
+    void Awake()
+    {
+        gameObject.SetActive(true);
+    }
 
     public void AmmoCollected()
     {
-        collectedAmmo += playerShooting.reserveAmmo;
+        playerShooting.reserveAmmo += collectedAmmo;
+        ammoUI.UpdateAmmoUI(playerShooting.currentMag, playerShooting.reserveAmmo);
+        gameObject.SetActive(false);
     }
 }

@@ -1,10 +1,6 @@
-using System;
 using System.Collections;
-using NUnit.Framework;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Pool;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -17,10 +13,10 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] float fireRate = 0f;
     [SerializeField] int maxMag = 0;
     [SerializeField]public int reserveAmmo = 0;
+    [SerializeField] float gunShotRadius = 0f;
 
-    private int currentMag;
+    public int currentMag;
     private float nextFireTime;
-    //private bool isShooting = false;
     private bool isReloading = false;
     private float reloadDelay = 2;
 

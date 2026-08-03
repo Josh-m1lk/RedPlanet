@@ -1,66 +1,99 @@
-using Unity.VisualScripting;
-using UnityEditor;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
     [SerializeField] float detectionRadius = 2f; 
+    [SerializeField] float lookAngle = 30f;
+    [SerializeField] Transform interactionOrigin;
     [SerializeField] LayerMask interactableLayer;
+    [SerializeField] TextMeshProUGUI interactionPrompt;
     private Collider[] colliders;
     private int maxColliders = 20;
-    private IInteractable focused;
+    private IInteractable nearest;
+    private IInteractable previousNearest;
+    private Camera mainCamera;
 
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
-            //FindNearestInteractable();
+            nearest?.Interact();
         }
     }
 
     void Awake()
     {
         colliders = new Collider[maxColliders];
+        mainCamera = Camera.main;
+        interactionPrompt.enabled = false;
     }
 
     void Update()
     {
-        //IInteractable nearest = FindNearestInteractable();
+        nearest = FindNearestInteractable();
+        
+        if (nearest != previousNearest)
+        {
+            previousNearest?.OnFocusLose();
+            nearest?.OnFocusGain();
+
+            previousNearest = nearest;
+        }
+
+        if (nearest != null)
+        {
+            Vector3 screenPos = mainCamera.WorldToScreenPoint(nearest.InteractPoint.position);
+
+            interactionPrompt.transform.position = screenPos;
+            interactionPrompt.text = nearest.InteractionPrompt;
+            interactionPrompt.enabled = true;
+        }
+        else
+        {
+            interactionPrompt.enabled = false;
+        }
+
     } 
 
-    /*private IInteractable FindNearestInteractable()
+    private IInteractable FindNearestInteractable()
     {
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, detectionRadius, colliders, interactableLayer);
-        IInteractable nearest = null;
-        float bestDistSq = float.MaxValue;
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, detectionRadius, colliders, interactableLayer);//Sphere to detect interactable colliders
+        IInteractable closestInteractable = null;//there is not closest interactable to start
+        float closestDistance = Mathf.Infinity;//grab the closes interactable
 
         for (int i = 0; i < hits; i++)
         {
-            Collider col = colliders[i];
-            if (col == null) continue;
-            IInteractable interactable = col.GetComponentInParent<IInteractable>();
-            if (interactable == null) continue;
-            if (!interactable.CanInteract()) continue;
-            float distSq = (col.transform.position - transform.position).sqrMagnitude;
-            if (distSq < bestDistSq)
+            Collider hit = colliders[i];//local var for interactables
+            Vector3 directionToObject = hit.bounds.center - interactionOrigin.position;//calc for player looking at obj
+            float angle = Vector3.Angle(interactionOrigin.forward, directionToObject);//The angle
+
+            if (angle > lookAngle / 2f) continue;
+
+            float distanceToObject = directionToObject.magnitude;
+
+            if (Physics.Raycast(interactionOrigin.position, directionToObject.normalized, out RaycastHit rayHit, distanceToObject))
             {
-                bestDistSq = distSq;
-                nearest = interactable;
+                IInteractable interactable = rayHit.collider.GetComponentInParent<IInteractable>();
+
+                if (interactable == null) continue;
+
+                float squaredDistance = directionToObject.sqrMagnitude;
+                
+                if (squaredDistance < closestDistance)
+                {
+                    closestDistance = squaredDistance;
+                    closestInteractable = interactable;
+                }
             }
         }
-    }*/
+        return closestInteractable;
+    }
 
-    void ODrawGizmosSelected()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
-
-    //I need to create a collider sphere to detect for colliders 
-    //If the sphere does not detect anything continue the function until it does
-    //If the player detects something how many? 
-    //If player detects something does it have the component I am looking for 
-    //if so display the prompt 
 }

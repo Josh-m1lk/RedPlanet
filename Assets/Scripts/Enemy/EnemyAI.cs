@@ -6,7 +6,8 @@ public enum EnemyStates
         Patrol,
         Investigate,
         Chase,
-        Attack
+        Attack,
+        Ears
     };
 
 public class EnemyAI : MonoBehaviour
@@ -20,6 +21,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] EnemyFOV enemyFOV;
     [SerializeField] EnemyLocomotion enemyLocomotion;
     [SerializeField] EnemyAttack enemyAttack;
+    [SerializeField] EnemyEars enemyEars;
 
     void Awake()
     {
@@ -126,6 +128,17 @@ public class EnemyAI : MonoBehaviour
                     enemyLocomotion.StopMoving();
                 }
                 break;
+
+            case EnemyStates.Ears:
+                {
+                    //If enemy heard the player
+                        //Go towards the enemy footsteps last heard pos
+                        //Activate Look Couroutine
+                    //If enemy heard gunshot 
+                        //Go towards the gunshot last heard pos
+                        //Activate Look Couroutine
+                    break;
+                }
         }
     }
 

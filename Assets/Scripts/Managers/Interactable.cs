@@ -1,15 +1,27 @@
-using NUnit.Framework;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Interactable : MonoBehaviour, IInteractable
 {
-    [SerializeField] TextMeshProUGUI interactionPrompt;
     [SerializeField] Outline outline;
     [SerializeField] UnityEvent onInteract;
-    private bool isInteractable = false;
-    public bool CanInteract() => isInteractable;
+    [SerializeField] string interactPrompt;
+    [SerializeField] Transform interactionPoint;
+    public bool isInteractable = false;
+
+    public string InteractionPrompt => interactPrompt;
+
+    public Transform InteractPoint
+    {
+        get
+        {
+            if (interactionPoint != null)
+            {
+                return interactionPoint;
+            }
+            return transform;
+        }
+    }
 
     void Awake()
     {
@@ -27,10 +39,12 @@ public class Interactable : MonoBehaviour, IInteractable
     void IInteractable.OnFocusGain()
     {
         outline.enabled = true;
+        isInteractable = true;
     }
 
     void IInteractable.OnFocusLose()
     {
         outline.enabled = false;
+        isInteractable = false;
     }
 }

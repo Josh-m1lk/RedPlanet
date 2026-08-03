@@ -12,13 +12,20 @@ public class EnemyFOV : MonoBehaviour
 
     [Header("References")]
     public GameObject playerRef;
+    private Collider[] rangeChecks;
+    private int maxColliders = 1;
 
     [Header("LayerMasks")]
     public LayerMask targetMask;
     public LayerMask obstructionMask;
 
     public bool canSeePlayer = false;
-    
+
+    void Awake()
+    {
+        rangeChecks = new Collider[maxColliders];
+    }
+
     void Start()
     {
         StartCoroutine(FOVRoutine());
@@ -38,10 +45,10 @@ public class EnemyFOV : MonoBehaviour
 
     private void FieldOfViewRoutine()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);//checks for layers in collider range
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, radius, rangeChecks, targetMask);//checks for layers in collider range
 
         //If enemy does not detect anything in sphere return false
-        if (rangeChecks.Length == 0)
+        if (hits == 0)
         {
             canSeePlayer = false;
             return;

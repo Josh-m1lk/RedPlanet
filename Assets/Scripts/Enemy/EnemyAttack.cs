@@ -10,7 +10,7 @@ public class EnemyAttack : MonoBehaviour
     public float attackRange = 1.5f;//How far attack hits
     public bool isAttacking = false;
     private int maxColliders = 5;
-    [SerializeField] float nextAttackTime;
+    private float nextAttackTime;
     [SerializeField] float attackCooldown = 1f;
 
     [Header("References")]

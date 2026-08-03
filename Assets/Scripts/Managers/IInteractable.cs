@@ -2,8 +2,10 @@ using UnityEngine;
 
 public interface IInteractable
 {
+    string InteractionPrompt { get; }
+    Transform InteractPoint { get; }
+
     void Interact();
-    bool CanInteract();
     void OnFocusGain();
     void OnFocusLose();
 }
