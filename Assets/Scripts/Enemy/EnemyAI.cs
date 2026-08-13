@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EnemyStates
@@ -16,6 +15,7 @@ public class EnemyAI : MonoBehaviour
     private EnemyStates enemyStates; 
     private Coroutine lookCoroutine;
     private Vector3 targetLastSeen;
+    private Vector3 targetLastHeard;
 
     [Header("ScriptReferences")]
     [SerializeField] EnemyFOV enemyFOV;
@@ -23,11 +23,14 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] EnemyAttack enemyAttack;
     [SerializeField] EnemyEars enemyEars;
 
+    public bool isInvestigatingSound = false;
+
     void Awake()
     {
         enemyFOV = GetComponent<EnemyFOV>();
         enemyLocomotion = GetComponent<EnemyLocomotion>();
         enemyAttack = GetComponent<EnemyAttack>();
+        enemyEars = GetComponent<EnemyEars>();
     }
 
     void Start()
@@ -40,6 +43,14 @@ public class EnemyAI : MonoBehaviour
         if (enemyFOV.canSeePlayer)
         {
             targetLastSeen = enemyFOV.playerRef.transform.position;
+        }
+
+        if (!enemyFOV.canSeePlayer && enemyEars.heardSomething)
+        {
+            targetLastHeard = enemyEars.lastHeardSound;
+            enemyEars.heardSomething = false;
+            isInvestigatingSound = true;
+            enemyStates = EnemyStates.Ears;
         }
         switch (enemyStates)
         {
@@ -67,7 +78,8 @@ public class EnemyAI : MonoBehaviour
                     break;
                 } 
 
-                enemyLocomotion.Investigate(targetLastSeen);//if enemy cant see player investigate
+                Vector3 investigateTarget = isInvestigatingSound? targetLastHeard: targetLastSeen;
+                enemyLocomotion.Investigate(investigateTarget);//if enemy cant see player investigate
 
                 if (enemyLocomotion.hasReachedLastKnownPosition && lookCoroutine == null)
                 {
@@ -75,6 +87,10 @@ public class EnemyAI : MonoBehaviour
                 }
                 if (enemyLocomotion.hasFinishedSearching)
                 {
+                    if (isInvestigatingSound)
+                    {
+                        isInvestigatingSound = false;
+                    }
                     lookCoroutine = null;//turn off look around after enemy is done investigating
                     enemyLocomotion.ReturnToPatrolPoint();//call to go back to original point 
                     enemyStates = EnemyStates.Patrol;//once enemy finishes search go back to patrol
@@ -131,12 +147,14 @@ public class EnemyAI : MonoBehaviour
 
             case EnemyStates.Ears:
                 {
-                    //If enemy heard the player
-                        //Go towards the enemy footsteps last heard pos
-                        //Activate Look Couroutine
-                    //If enemy heard gunshot 
-                        //Go towards the gunshot last heard pos
-                        //Activate Look Couroutine
+                    if (enemyFOV.canSeePlayer)
+                    {
+                        enemyStates = EnemyStates.Chase;
+                        break;
+                    }
+
+                    enemyLocomotion.Investigate(targetLastHeard);
+                    enemyStates = EnemyStates.Investigate;
                     break;
                 }
         }

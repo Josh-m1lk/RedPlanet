@@ -1,20 +1,31 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyEars : MonoBehaviour
 {
-    public bool heardWalking = false;
-    public bool heardShooting = false;
-    //Radius for how far enemy can hear 
-    //Should have ears if player is walking near 
-    //Ears for the shooting they can hear
+    public bool heardSomething = false;
+    public Vector3 lastHeardSound;
+    private SoundType lastHeardType;
+    public float hearingRadius = 15f;
 
-    public void HeardFootsteps()
-    {
-        
+    void OnEnable() => SoundManager.OnSoundEmitted += HandleSound;
+    void OnDisable() => SoundManager.OnSoundEmitted -= HandleSound;
+
+    public void HandleSound(Vector3 soundPos, float soundRadius, SoundType type)
+    { 
+        float distanceToSound = Vector3.Distance(transform.position, soundPos);
+        if (distanceToSound <= soundRadius && distanceToSound <= hearingRadius)
+        {
+            Debug.Log("I heard something");
+            heardSomething = true;
+            lastHeardSound = soundPos;
+            lastHeardType = type;
+        }
     }
 
-    public void HeardGunShot()
+    private void OnDrawGizmosSelected()
     {
-        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, hearingRadius);
     }
 }

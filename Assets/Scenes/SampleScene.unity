@@ -377,6 +377,11 @@ MonoBehaviour:
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 0}
   m_BuildHeightMesh: 0
+--- !u!1 &359584793 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1753261692016536763, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
+  m_PrefabInstance: {fileID: 1408071768}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &380444847
 GameObject:
   m_ObjectHideFlags: 0
@@ -3259,7 +3264,7 @@ PrefabInstance:
       objectReference: {fileID: 1781062409}
     - target: {fileID: 4850855715528223258, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.175191
+      value: 0.9
       objectReference: {fileID: 0}
     - target: {fileID: 4850855715528223258, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3297,6 +3302,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5985058996594818155, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
+      propertyPath: enemyEars
+      value: 
+      objectReference: {fileID: 1408071779}
     - target: {fileID: 6252909987855835056, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
       propertyPath: 'points.Array.data[0]'
       value: 
@@ -3316,13 +3325,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1753261692016536763, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1408071779}
   m_SourcePrefab: {fileID: 100100000, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
 --- !u!4 &1408071769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4850855715528223258, guid: 66af5c9705da1c64d83805cadab08203, type: 3}
   m_PrefabInstance: {fileID: 1408071768}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1408071779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359584793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a60a7affda0598d42864ff05dc410a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyEars
+  heardSomething: 0
+  lastHeardSound: {x: 0, y: 0, z: 0}
+  hearingRadius: 15
 --- !u!1 &1426280931
 GameObject:
   m_ObjectHideFlags: 0
@@ -4954,10 +4981,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1671346632}
     m_Modifications:
+    - target: {fileID: 124885010227243250, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 743979436139112816, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.77674
+      objectReference: {fileID: 0}
     - target: {fileID: 747690260744577094, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 627726562}
+    - target: {fileID: 2671592917021367181, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.1599998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2728057453247590917, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3029123712190780543, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.16
+      objectReference: {fileID: 0}
     - target: {fileID: 3938364866989684472, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
       propertyPath: interactionPrompt
       value: 
@@ -4970,6 +5017,10 @@ PrefabInstance:
       propertyPath: bulletPool
       value: 
       objectReference: {fileID: 1288864729}
+    - target: {fileID: 4180372887175045879, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: gunShotRadius
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 4393010450832139520, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
       propertyPath: m_LocalPosition.x
       value: -14.27389
@@ -5029,6 +5080,10 @@ PrefabInstance:
     - target: {fileID: 6100904917229125102, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
       propertyPath: m_Name
       value: PlayerPackage
+      objectReference: {fileID: 0}
+    - target: {fileID: 7938960122063057795, guid: ade41fdbb11b75f408ce5207b8a532be, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -9,7 +9,7 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] Transform interactionOrigin;
     [SerializeField] LayerMask interactableLayer;
     [SerializeField] TextMeshProUGUI interactionPrompt;
-    private Collider[] colliders;
+    private Collider[] rangeChecks;
     private int maxColliders = 20;
     private IInteractable nearest;
     private IInteractable previousNearest;
@@ -25,7 +25,7 @@ public class PlayerInteract : MonoBehaviour
 
     void Awake()
     {
-        colliders = new Collider[maxColliders];
+        rangeChecks = new Collider[maxColliders];
         mainCamera = Camera.main;
         interactionPrompt.enabled = false;
     }
@@ -59,13 +59,13 @@ public class PlayerInteract : MonoBehaviour
 
     private IInteractable FindNearestInteractable()
     {
-        int hits = Physics.OverlapSphereNonAlloc(transform.position, detectionRadius, colliders, interactableLayer);//Sphere to detect interactable colliders
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, detectionRadius, rangeChecks, interactableLayer);//Sphere to detect interactable colliders
         IInteractable closestInteractable = null;//there is not closest interactable to start
         float closestDistance = Mathf.Infinity;//grab the closes interactable
 
         for (int i = 0; i < hits; i++)
         {
-            Collider hit = colliders[i];//local var for interactables
+            Collider hit = rangeChecks[i];//local var for interactables
             Vector3 directionToObject = hit.bounds.center - interactionOrigin.position;//calc for player looking at obj
             float angle = Vector3.Angle(interactionOrigin.forward, directionToObject);//The angle
 
@@ -89,11 +89,5 @@ public class PlayerInteract : MonoBehaviour
             }
         }
         return closestInteractable;
-    }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.black;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }

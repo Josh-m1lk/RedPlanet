@@ -13,7 +13,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] float fireRate = 0f;
     [SerializeField] int maxMag = 0;
     [SerializeField]public int reserveAmmo = 0;
-    [SerializeField] float gunShotRadius = 0f;
+    [SerializeField]float gunShotRadius = 0f;
 
     public int currentMag;
     private float nextFireTime;
@@ -57,6 +57,7 @@ public class PlayerShooting : MonoBehaviour
             bullet.transform.rotation = bulletSpawn.rotation;
 
             bullet.Fire();//Call fire function after player shoots
+            SoundManager.EmitSound(bulletSpawn.position, gunShotRadius, SoundType.Gunshot);
 
             currentMag--;//decrease ammo count in mag
             ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);//update UI 
@@ -89,5 +90,11 @@ public class PlayerShooting : MonoBehaviour
 
         ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);//Update ammo 
         isReloading = false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(bulletSpawn.position, gunShotRadius);
     }
 }

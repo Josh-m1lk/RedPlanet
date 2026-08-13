@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speed = 0f;
     [SerializeField] float rotationSpeed = 0f;
     private const float maxInputMagnitude = 1f;
+    public float footStepRadius = 5f;
 
     [Header("Input")]
     private Vector2 moveInput, mouseLook;
@@ -57,6 +58,12 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);//Move the player
+        FootStepSound();
+    }
+
+    private void FootStepSound()
+    {
+        SoundManager.EmitSound(transform.position, footStepRadius, SoundType.Footstep);
     }
 
     private void PlayerLook()
@@ -81,5 +88,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rotationTarget = ray.GetPoint(enter);//Store point on the ground where mouse points
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, footStepRadius);
     }
 }

@@ -38,9 +38,7 @@ public class EnemyAttack : MonoBehaviour
             PlayerHealth playerHealth = hitColliders[i].GetComponentInParent<PlayerHealth>();//Does the coliider have player health
             if (playerHealth)
             {
-                //play animation, do damage, and set bool to true
                 //play animation
-                Debug.Log("I got hit");
                 nextAttackTime = Time.time + attackCooldown;//how fast enemy can attack
                 playerHealth.TakeDamage(attackDmg);
                 isAttacking = true;
@@ -54,10 +52,4 @@ public class EnemyAttack : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
-
-    //Make an attack radius to detect if player is in it
-    //If player detected in attack range
-        //stop ai 
-        //hit the player
-        //bool turns true
 }
