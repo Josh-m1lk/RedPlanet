@@ -23,9 +23,9 @@ public class EnemyEars : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    /*private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, hearingRadius);
-    }
+    }*/
 }

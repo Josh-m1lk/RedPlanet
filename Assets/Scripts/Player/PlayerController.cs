@@ -4,9 +4,13 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     [Header("Script References")]
-    [SerializeField] PlayerHealth playerHealth;
-    [SerializeField] PlayerMovement playerMovement;
-    [SerializeField] PlayerShooting playerShooting;
+    [SerializeField] PauseMenu pauseMenu;
 
-    
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            pauseMenu.Pause();
+        }
+    }
 }

@@ -14,10 +14,21 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameStates gameState;
     [SerializeField] LevelManager levelManager;
+    [SerializeField] PauseMenu pauseMenu;
 
     void Awake()
     {
-        instance = this;
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
         gameState = GameStates.Playing;
     }
 
@@ -29,6 +40,8 @@ public class GameManager : MonoBehaviour
     public void PauseGame()
     {
         gameState = GameStates.Pause;
+
+        pauseMenu.Pause();
     }
 
     public void PlayerDied()
@@ -42,12 +55,5 @@ public class GameManager : MonoBehaviour
     {
         gameState = GameStates.Victory;
 
-    }
-
-    public IEnumerator RestartLevelDelay()
-    {
-        float restartDelay = 5f;
-
-        yield return new WaitForSeconds(restartDelay);
     }
 }
