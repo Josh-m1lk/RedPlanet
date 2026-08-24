@@ -5,7 +5,7 @@ public class EnemyEars : MonoBehaviour
 {
     public bool heardSomething = false;
     public Vector3 lastHeardSound;
-    private SoundType lastHeardType;
+    public SoundType lastHeardType;
     public float hearingRadius = 15f;
 
     void OnEnable() => SoundManager.OnSoundEmitted += HandleSound;
@@ -22,10 +22,4 @@ public class EnemyEars : MonoBehaviour
             lastHeardType = type;
         }
     }
-
-    /*private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, hearingRadius);
-    }*/
 }

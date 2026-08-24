@@ -6,19 +6,29 @@ public class PlayerShooting : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] BulletPool bulletPool;
-    [SerializeField]Transform bulletSpawn;
     [SerializeField] AmmoUI ammoUI;
+    [SerializeField] WeaponSwitching weaponSwitching;
 
-    [Header("Settings")]
-    [SerializeField] float fireRate = 0f;
-    [SerializeField] int maxMag = 0;
-    [SerializeField]public int reserveAmmo = 0;
-    [SerializeField]float gunShotRadius = 0f;
-
-    public int currentMag;
     private float nextFireTime;
     private bool isReloading = false;
-    private float reloadDelay = 2;
+    private float reloadDelay = 2f;
+
+    public int currentMag
+    {
+        get { return weaponSwitching.CurrentWeapon.currentMag; }
+        set { weaponSwitching.CurrentWeapon.currentMag = value; }
+    }
+
+    public int reserveAmmo
+    {
+        get { return weaponSwitching.CurrentWeapon.reserveAmmo; }
+        set { weaponSwitching.CurrentWeapon.reserveAmmo = value; }
+    }
+
+    private void Awake()
+    {
+        ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);
+    }
 
     public void OnShoot(InputAction.CallbackContext context)
     {
@@ -36,28 +46,25 @@ public class PlayerShooting : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        currentMag = maxMag;
-        ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);
-    }
-
     public void Shoot()
     {
         if (isReloading) return;
 
         if (Time.time > nextFireTime && currentMag > 0)
         {
-            nextFireTime = Time.time + fireRate;//how long you have to wait in between shots
+            WeaponAmmo weapon = weaponSwitching.CurrentWeapon;
+            nextFireTime = Time.time + weapon.fireRate;//how long you have to wait in between shots
             
             Bullet bullet = bulletPool.GetBullet();//Get bullet from pool
 
             //Get bullet spawn pos and rot
-            bullet.transform.position = bulletSpawn.position;
-            bullet.transform.rotation = bulletSpawn.rotation;
+            bullet.transform.position = weapon.bulletSpawn.position;
+            bullet.transform.rotation = weapon.bulletSpawn.rotation;
+            bullet.bulletDamage = weapon.bulletDamage;
+            bullet.bulletSpeed = weapon.bulletSpeed;
 
             bullet.Fire();//Call fire function after player shoots
-            SoundManager.EmitSound(bulletSpawn.position, gunShotRadius, SoundType.Gunshot);
+            SoundManager.EmitSound(weapon.bulletSpawn.position, weapon.gunShotRadius, SoundType.Gunshot);
 
             currentMag--;//decrease ammo count in mag
             ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);//update UI 
@@ -65,24 +72,35 @@ public class PlayerShooting : MonoBehaviour
     }  
 
     public void Reload()
-    {   
-        //If currently reloading and current mag has full ammo don't do nothing
+    {
         if (isReloading) return;
-        if (currentMag == maxMag) return;
 
-        //Reload will be true and will begin coroutine
+        if (currentMag == weaponSwitching.CurrentWeapon.maxMag)
+        {
+            return;
+        }
+
         isReloading = true;
         StartCoroutine(WaitReloading());
     }
 
-    public IEnumerator WaitReloading()
+    public void CancelReload()
     {
-        ammoUI.ShowReloading(reserveAmmo);//Show reload 
+        if (!isReloading) return;
 
-        yield return new WaitForSeconds(reloadDelay);//Wait for reload to happen 
+        StopCoroutine(nameof(WaitReloading));
+        isReloading = false;
+        ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);
+    }
 
-        int ammoNeeded = maxMag - currentMag;//how much ammo is need for current mag
-        int ammoToAdd = Mathf.Min(ammoNeeded, reserveAmmo);//Calculate how much ammo is needed to be taken from reserve
+    private IEnumerator WaitReloading()
+    {
+        ammoUI.ShowReloading(reserveAmmo);
+
+        yield return new WaitForSeconds(reloadDelay);
+
+        int ammoNeeded = weaponSwitching.CurrentWeapon.maxMag - currentMag;
+        int ammoToAdd = Mathf.Min(ammoNeeded, reserveAmmo);
 
         //Add the amount needed to fill current mag and subtract ammount taken from reserve
         currentMag += ammoToAdd;
@@ -95,6 +113,12 @@ public class PlayerShooting : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(bulletSpawn.position, gunShotRadius);
+        if (weaponSwitching != null && weaponSwitching.CurrentWeapon.bulletSpawn != null)
+        {
+            Gizmos.DrawWireSphere(
+                weaponSwitching.CurrentWeapon.bulletSpawn.position,
+                weaponSwitching.CurrentWeapon.gunShotRadius
+            );
+        }
     }
 }

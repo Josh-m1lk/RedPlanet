@@ -1,9 +1,19 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 public class AmmoUI : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI gunName;
     [SerializeField] TextMeshProUGUI ammoText;
+
+    public void UpdateGunName(string name)
+    {
+        if (gunName != null)
+        {
+            gunName.text = name;
+        }
+    }
 
     public void UpdateAmmoUI(int current, int reserve)
     {

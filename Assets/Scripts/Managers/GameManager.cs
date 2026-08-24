@@ -39,21 +39,28 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        gameState = GameStates.Pause;
-
-        pauseMenu.Pause();
+        if (pauseMenu.isPaused)
+        {
+            gameState = GameStates.Pause;
+        }
+        else if (!pauseMenu.isPaused)
+        {
+            gameState = GameStates.Playing;
+        }
+        
     }
 
     public void PlayerDied()
     {
-        gameState = GameStates.GameOver;
-
         levelManager.RestartLevel();
+
+        gameState = GameStates.GameOver;
     }
 
     public void LevelComplete()
     {
-        gameState = GameStates.Victory;
+        
 
+        gameState = GameStates.Victory;
     }
 }
