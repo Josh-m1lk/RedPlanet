@@ -27,7 +27,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void Awake()
     {
-        ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);
+        ammoUI.UpdateAmmoUI(currentMag, weaponSwitching.CurrentWeapon.maxMag);
     }
 
     public void OnShoot(InputAction.CallbackContext context)
@@ -67,7 +67,7 @@ public class PlayerShooting : MonoBehaviour
             SoundManager.EmitSound(weapon.bulletSpawn.position, weapon.gunShotRadius, SoundType.Gunshot);
 
             currentMag--;//decrease ammo count in mag
-            ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);//update UI 
+            ammoUI.UpdateAmmoUI(currentMag, weaponSwitching.CurrentWeapon.maxMag);//update UI 
         } 
     }  
 
@@ -95,7 +95,7 @@ public class PlayerShooting : MonoBehaviour
 
     private IEnumerator WaitReloading()
     {
-        ammoUI.ShowReloading(reserveAmmo);
+        ammoUI.ShowReloading();
 
         yield return new WaitForSeconds(reloadDelay);
 
@@ -106,7 +106,7 @@ public class PlayerShooting : MonoBehaviour
         currentMag += ammoToAdd;
         reserveAmmo -= ammoToAdd;
 
-        ammoUI.UpdateAmmoUI(currentMag, reserveAmmo);//Update ammo 
+        ammoUI.UpdateAmmoUI(currentMag, weaponSwitching.CurrentWeapon.maxMag);//Update ammo 
         isReloading = false;
     }
 

@@ -1,11 +1,11 @@
-using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AmmoUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI gunName;
-    [SerializeField] TextMeshProUGUI ammoText;
+    [SerializeField] Image ammo;
 
     public void UpdateGunName(string name)
     {
@@ -15,13 +15,17 @@ public class AmmoUI : MonoBehaviour
         }
     }
 
-    public void UpdateAmmoUI(int current, int reserve)
+    public void UpdateAmmoUI(int current, int maxAmmo)
     {
-        ammoText.text = $"{current} / {reserve}";//Will show ammo in current mag and reserve pile
+        if (ammo == null) return;
+
+        ammo.fillAmount = Mathf.Clamp01((float)current / Mathf.Max(1, maxAmmo));
     }
 
-    public void ShowReloading(int reserve)
+    public void ShowReloading()
     {
-        ammoText.text = $"Reloading / {reserve}";//Will show reloading instead of current ammo but will still show reserve
+        if (ammo == null) return;
+
+        ammo.fillAmount = 0f;
     }
 }

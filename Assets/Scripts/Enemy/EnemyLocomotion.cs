@@ -11,6 +11,7 @@ public class EnemyLocomotion : MonoBehaviour
     private Quaternion leftRotation;
     private Quaternion rightRotation;
     private Quaternion startRotation;
+    [SerializeField] Animator animator;
 
     [Header("Settings")]
     private float turnSpeed = 5f;
@@ -20,6 +21,13 @@ public class EnemyLocomotion : MonoBehaviour
     private float patrolStoppingDistance = 0.5f;
     private float investigateStoppingDistance = 1f;
     public float attackDistance = 2f;
+    [SerializeField] float walkSpeed = 2f;
+    [SerializeField] float runSpeed = 4f;
+    [SerializeField] float investigateSpeed = 3f;
+
+    private const int idleAnimation = 0;
+    private const int walkAnimation = 2;
+    private const int runAnimation = 3;
 
     public bool hasReachedLastKnownPosition = false;
     public bool isSearching = false;
@@ -28,6 +36,7 @@ public class EnemyLocomotion : MonoBehaviour
 
     void Awake()
     {
+        animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;//disable for continous movement 
     }
@@ -70,21 +79,27 @@ public class EnemyLocomotion : MonoBehaviour
         if (points.Length == 0)return;//return nothing if there are no points
 
         agent.destination = points[destinationPoint].position;//go to point 0
+        agent.speed = walkSpeed;
+        animator.SetInteger("AnimationState", walkAnimation);
     }
 
     public void Chase(Vector3 targetPosition)
     {
         agent.SetDestination(targetPosition);
+        agent.speed = runSpeed;
+        animator.SetInteger("AnimationState", runAnimation);
     }
 
     public void Investigate(Vector3 destination)
     {
         agent.SetDestination(destination);
+        agent.speed = investigateSpeed;
         agent.stoppingDistance = investigateStoppingDistance;
 
         if (!agent.pathPending && agent.remainingDistance <= investigateStoppingDistance)
         {
             hasReachedLastKnownPosition = true;
+            animator.SetInteger("AnimationState", idleAnimation);
         }
         else
         {
@@ -97,6 +112,7 @@ public class EnemyLocomotion : MonoBehaviour
     {
         isWaiting = true;
         StopMoving();
+        animator.SetInteger("AnimationState", idleAnimation);
 
         yield return new WaitForSeconds(waitTime);//enemy will wait at the current patrol point for x time
 
@@ -146,9 +162,9 @@ public class EnemyLocomotion : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    public void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, attackDistance);
     }
 }

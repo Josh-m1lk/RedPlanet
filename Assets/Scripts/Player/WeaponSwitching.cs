@@ -51,6 +51,6 @@ public class WeaponSwitching : MonoBehaviour
         WeaponAmmo weapon = CurrentWeapon;
 
         ammoUI?.UpdateGunName(weapon.weaponName);
-        ammoUI?.UpdateAmmoUI(weapon.currentMag, weapon.reserveAmmo);
+        ammoUI?.UpdateAmmoUI(weapon.currentMag, weapon.maxMag);
     }
 }

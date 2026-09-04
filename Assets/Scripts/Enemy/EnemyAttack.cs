@@ -1,3 +1,4 @@
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
@@ -13,12 +14,14 @@ public class EnemyAttack : MonoBehaviour
     [Header("References")]
     private Collider[] hitColliders;
     [SerializeField] Transform attackPoint;
+    [SerializeField] Animator animator;
 
     [Header("ScriptReferences")]
     [SerializeField] EnemyFOV enemyFOV;
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
         hitColliders = new Collider[maxColliders];//initialize array once
     }
 
@@ -35,7 +38,7 @@ public class EnemyAttack : MonoBehaviour
             PlayerHealth playerHealth = hitColliders[i].GetComponentInParent<PlayerHealth>();//Does the coliider have player health
             if (playerHealth)
             {
-                //play animation
+                animator.SetTrigger("AttackTrigger");
                 nextAttackTime = Time.time + attackCooldown;//how fast enemy can attack
                 playerHealth.TakeDamage(attackDmg);
                 isAttacking = true;
@@ -44,9 +47,14 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
+    public void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+    }
+
+    public void HitFrameReached()
+    {
+        Debug.Log("I have reached hit frame");
     }
 }

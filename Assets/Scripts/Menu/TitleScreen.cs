@@ -13,8 +13,8 @@ public class TitleScreen : MonoBehaviour
     [Header("OptionsMenu")]
     [SerializeField] GameObject optionsMenu;
     [SerializeField] Slider volume;
-    [SerializeField] AudioMixer masterVolume;
-    [SerializeField] Slider brightness;
+    //[SerializeField] AudioMixer masterVolume;
+    //[SerializeField] Slider brightness;
     [SerializeField] Button goBack;
 
     void Awake()

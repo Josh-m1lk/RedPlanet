@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed)
         {
-            pauseMenu.Pause();
+            pauseMenu.OnPause();
         }
     }
 
