@@ -35,6 +35,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("I am in the walk state");
         enemyLocomotion.GoToNextPatrolPoint();//enemy will go to first patrol point when game starts
     }
 

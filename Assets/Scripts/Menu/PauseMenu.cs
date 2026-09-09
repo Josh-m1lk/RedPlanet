@@ -1,16 +1,20 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.TerrainTools;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class PauseMenu : MonoBehaviour
 {
     [Header("Pause")]
     [SerializeField] GameObject pauseScreen;
     [SerializeField] GameObject optionsScreen;
+    [SerializeField] GameObject playerInterface;
+    [SerializeField] GameObject pauseBackground;
+    [SerializeField] GameObject objectiveText;
     [SerializeField] Button resumeGame;
     [SerializeField] Button optionsButton;
     [SerializeField] Button quitGame;
+    [SerializeField] VideoPlayer videoPlayer;
     public bool isPaused = false;
 
     [Header("Script References")]
@@ -18,28 +22,58 @@ public class PauseMenu : MonoBehaviour
 
     void Awake()
     {
-        if (pauseScreen != null) pauseScreen.SetActive(false);
-        if (optionsScreen != null) optionsScreen.SetActive(false);
+        if (pauseScreen == null || optionsScreen == null || playerInterface == null || playerController == null || pauseBackground == null || objectiveText == null)
+        {
+            Debug.LogError("PauseMenu is missing one or more required references.", this);
+            enabled = false;
+            return;
+        }
+
+        if (videoPlayer == null)
+        {
+            Debug.LogError("VideoPlayer is missing", this);
+            enabled = false;
+            return;
+        }
+
+        pauseScreen.SetActive(false);
+        optionsScreen.SetActive(false);
+        playerInterface.SetActive(true);
+        pauseBackground.SetActive(false);
+        objectiveText.SetActive(false);
+        videoPlayer.Stop();
     }
 
     public void OnResumeGame()
     {
         if (!isPaused) return;
         
-        if (pauseScreen != null) pauseScreen.SetActive(false);
-        if (optionsScreen != null) optionsScreen.SetActive(false);
+        pauseScreen.SetActive(false);
+        pauseBackground.SetActive(false);
+        optionsScreen.SetActive(false);
+        objectiveText.SetActive(false);
+        playerInterface.SetActive(true);
+
         Time.timeScale = 1;
 
-        isPaused = false;
+        videoPlayer.Stop();
 
         playerController.EnableInput();
+
+        isPaused = false;
     }
 
     public void OnPause()
     {
-        if (pauseScreen != null) pauseScreen.SetActive(true);
-        if (optionsScreen != null)  optionsScreen.SetActive(false);
+        pauseScreen.SetActive(true);
+        pauseBackground.SetActive(true);
+        objectiveText.SetActive(true);
+        optionsScreen.SetActive(false);
+        playerInterface.SetActive(false);
+
         Time.timeScale = 0;
+
+        videoPlayer.Play();
 
         isPaused = true;
 
@@ -48,14 +82,16 @@ public class PauseMenu : MonoBehaviour
     
     public void OnOptions()
     {
-        if (pauseScreen != null) pauseScreen.SetActive(false);
-        if (optionsScreen != null) optionsScreen.SetActive(true);
+        pauseScreen.SetActive(false);
+        objectiveText.SetActive(false);
+        optionsScreen.SetActive(true);
     }
 
     public void OnBackPause()
     {
-        if (pauseScreen != null) pauseScreen.SetActive(true);
-        if (optionsScreen != null) optionsScreen.SetActive(false);
+        pauseScreen.SetActive(true);
+        objectiveText.SetActive(true);
+        optionsScreen.SetActive(false);
     }
 
     public void OnBackMainMenu()

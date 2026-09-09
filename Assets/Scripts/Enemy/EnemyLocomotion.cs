@@ -78,7 +78,7 @@ public class EnemyLocomotion : MonoBehaviour
     {
         if (points.Length == 0)return;//return nothing if there are no points
 
-        agent.destination = points[destinationPoint].position;//go to point 0
+        agent.SetDestination(points[destinationPoint].position);//go to point 0
         agent.speed = walkSpeed;
         animator.SetInteger("AnimationState", walkAnimation);
     }
