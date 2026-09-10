@@ -24,11 +24,6 @@ public class EnemyLocomotion : MonoBehaviour
     [SerializeField] float walkSpeed = 2f;
     [SerializeField] float runSpeed = 4f;
     [SerializeField] float investigateSpeed = 3f;
-
-    private const int idleAnimation = 0;
-    private const int walkAnimation = 2;
-    private const int runAnimation = 3;
-
     public bool hasReachedLastKnownPosition = false;
     public bool isSearching = false;
     public bool hasFinishedSearching = false;
@@ -63,7 +58,7 @@ public class EnemyLocomotion : MonoBehaviour
 
         if (isWaiting)return;//if the enemy is already waiting return nothing 
 
-        if (!agent.pathPending && agent.remainingDistance <= patrolStoppingDistance)
+        if (!agent.pathPending && agent.hasPath && agent.remainingDistance <= patrolStoppingDistance)
         {
             StartCoroutine(WaitAtPatrolPoint());//if distance is no longer being calculated and enemy is close or at start point begin couroutine to go to next
         }
@@ -78,16 +73,17 @@ public class EnemyLocomotion : MonoBehaviour
     {
         if (points.Length == 0)return;//return nothing if there are no points
 
+        ResumeMoving();
         agent.SetDestination(points[destinationPoint].position);//go to point 0
         agent.speed = walkSpeed;
-        animator.SetInteger("AnimationState", walkAnimation);
+        animator.SetBool("IsWalking", true);
     }
 
     public void Chase(Vector3 targetPosition)
     {
         agent.SetDestination(targetPosition);
         agent.speed = runSpeed;
-        animator.SetInteger("AnimationState", runAnimation);
+        animator.SetBool("IsRunning", true);
     }
 
     public void Investigate(Vector3 destination)
@@ -99,7 +95,7 @@ public class EnemyLocomotion : MonoBehaviour
         if (!agent.pathPending && agent.remainingDistance <= investigateStoppingDistance)
         {
             hasReachedLastKnownPosition = true;
-            animator.SetInteger("AnimationState", idleAnimation);
+            animator.SetBool("IsWalking", false);
         }
         else
         {
@@ -112,7 +108,7 @@ public class EnemyLocomotion : MonoBehaviour
     {
         isWaiting = true;
         StopMoving();
-        animator.SetInteger("AnimationState", idleAnimation);
+        animator.SetBool("IsWalking", false);
 
         yield return new WaitForSeconds(waitTime);//enemy will wait at the current patrol point for x time
 

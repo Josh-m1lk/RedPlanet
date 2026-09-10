@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -47,7 +48,7 @@ public class PauseMenu : MonoBehaviour
     public void OnResumeGame()
     {
         if (!isPaused) return;
-        
+
         pauseScreen.SetActive(false);
         pauseBackground.SetActive(false);
         optionsScreen.SetActive(false);
@@ -96,6 +97,7 @@ public class PauseMenu : MonoBehaviour
 
     public void OnBackMainMenu()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
     }
 }

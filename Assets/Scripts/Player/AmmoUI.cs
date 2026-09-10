@@ -6,6 +6,7 @@ public class AmmoUI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI gunName;
     [SerializeField] Image ammo;
+    [SerializeField] Image weaponImage;
 
     public void UpdateGunName(string name)
     {
@@ -20,6 +21,14 @@ public class AmmoUI : MonoBehaviour
         if (ammo == null) return;
 
         ammo.fillAmount = Mathf.Clamp01((float)current / Mathf.Max(1, maxAmmo));
+    }
+
+    public void UpdateWeaponImage(Sprite image)
+    {
+        if (weaponImage == null) return;
+
+        weaponImage.sprite = image;
+        weaponImage.enabled = image != null;
     }
 
     public void ShowReloading()

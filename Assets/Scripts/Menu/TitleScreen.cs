@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -16,6 +17,8 @@ public class TitleScreen : MonoBehaviour
     //[SerializeField] AudioMixer masterVolume;
     //[SerializeField] Slider brightness;
     [SerializeField] Button goBack;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip clickSound;
 
     void Awake()
     {

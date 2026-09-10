@@ -35,7 +35,7 @@ public class EnemyAI : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("I am in the walk state");
+        //Debug.Log("I am in the walk state");
         enemyLocomotion.GoToNextPatrolPoint();//enemy will go to first patrol point when game starts
     }
 
@@ -110,7 +110,7 @@ public class EnemyAI : MonoBehaviour
 
                 if (enemyFOV.distanceToTarget <= enemyLocomotion.attackDistance)//if player is close enough
                 {
-                    Debug.Log("Enemy switch to attack");
+                    //Debug.Log("Enemy switch to attack");
                     //stop enemy and go to attack state
                     enemyLocomotion.StopMoving();
                     enemyStates = EnemyStates.Attack;

@@ -202,7 +202,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 640397696352542454}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -14.27389, y: -0.03535, z: -16.09689}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 3442706371111511469}
   - component: {fileID: 8870290581416382938}
   - component: {fileID: 8040635383475547413}
+  - component: {fileID: 5977295540902507409}
   m_Layer: 5
   m_Name: QuitGameButton
   m_TagString: Untagged
@@ -348,6 +349,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5977295540902507409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910907749022041412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3374f22d009dcf841bcf07cff07ba7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuSounds
 --- !u!1 &916323389256253241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,6 +1147,7 @@ MonoBehaviour:
   videoPlayer: {fileID: 0}
   isPaused: 0
   playerController: {fileID: 634695497685238921}
+  titleScreen: {fileID: 0}
 --- !u!1 &4189192356744868652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1146,6 +1160,7 @@ GameObject:
   - component: {fileID: 2885697213544812077}
   - component: {fileID: 5175144851198383556}
   - component: {fileID: 9000984376947248908}
+  - component: {fileID: 3232343289557066469}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -1266,6 +1281,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3232343289557066469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4189192356744868652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3374f22d009dcf841bcf07cff07ba7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuSounds
 --- !u!1 &4626618214476264586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1385,6 +1412,7 @@ GameObject:
   - component: {fileID: 576828626186028291}
   - component: {fileID: 1148625762444851863}
   - component: {fileID: 1483007133878770925}
+  - component: {fileID: 8099831227275587235}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Untagged
@@ -1505,6 +1533,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8099831227275587235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5271171550959876940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3374f22d009dcf841bcf07cff07ba7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuSounds
 --- !u!1 &5775997396191530130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1660,7 +1700,8 @@ MonoBehaviour:
   selectedWeapon: 0
   ammoUI: {fileID: 162535978037696435}
   weapons:
-  - weaponName: Rifle
+  - weaponImage: {fileID: 21300000, guid: 779ed3325c276a3499e95291cc9eb77d, type: 3}
+    weaponName: Rifle
     bulletSpawn: {fileID: 4322445364124481955}
     fireRate: 0.5
     gunShotRadius: 15
@@ -1669,7 +1710,8 @@ MonoBehaviour:
     currentMag: 20
     maxMag: 20
     reserveAmmo: 90
-  - weaponName: Pistol
+  - weaponImage: {fileID: 21300000, guid: 9caf9e7dedda7884683cefed1e3e256a, type: 3}
+    weaponName: Pistol
     bulletSpawn: {fileID: 9213869150220192555}
     fireRate: 0.2
     gunShotRadius: 10
@@ -2304,6 +2346,7 @@ GameObject:
   - component: {fileID: 7056111322423597536}
   - component: {fileID: 6112416813105424111}
   - component: {fileID: 7140421528147672727}
+  - component: {fileID: 3085675988690940857}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -2424,6 +2467,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &3085675988690940857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8660187967274485761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3374f22d009dcf841bcf07cff07ba7cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuSounds
 --- !u!1 &8957317435491826945
 GameObject:
   m_ObjectHideFlags: 0
@@ -2801,6 +2856,10 @@ PrefabInstance:
       propertyPath: gunName
       value: 
       objectReference: {fileID: 949237165885987305}
+    - target: {fileID: 3313525788612224270, guid: 130470ab8db607c4e8bb94664f4c869f, type: 3}
+      propertyPath: weaponImage
+      value: 
+      objectReference: {fileID: 1691365437997678173}
     - target: {fileID: 5967513348374285958, guid: 130470ab8db607c4e8bb94664f4c869f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2887,7 +2946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7941600911713448905, guid: 130470ab8db607c4e8bb94664f4c869f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2905,6 +2964,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: def0e4e903199a148b2957f9440da376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AmmoUI
+--- !u!114 &1691365437997678173 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4090847763393334496, guid: 130470ab8db607c4e8bb94664f4c869f, type: 3}
+  m_PrefabInstance: {fileID: 3440032934197441213}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!114 &3621577582916911818 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2161479494420689015, guid: 130470ab8db607c4e8bb94664f4c869f, type: 3}

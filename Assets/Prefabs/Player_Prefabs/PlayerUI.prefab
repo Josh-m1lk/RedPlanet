@@ -402,14 +402,14 @@ RectTransform:
   m_GameObject: {fileID: 6388533119595402317}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.000061035156}
-  m_LocalScale: {x: 0.9346686, y: 0.4886006, z: 0.41522956}
+  m_LocalScale: {x: 0.9346686, y: 0.48860064, z: 0.4152296}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5967513348374285958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -106.7, y: 62.5}
+  m_AnchoredPosition: {x: -106.70007, y: 62.499973}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8441927453317729695
@@ -477,14 +477,14 @@ RectTransform:
   m_GameObject: {fileID: 7071026456353948384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.000061035156}
-  m_LocalScale: {x: 1.1051738, y: 0.41522956, z: 0.41522956}
+  m_LocalScale: {x: 1.1051738, y: 0.4152296, z: 0.4152296}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5967513348374285958}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -104.1, y: 66.2}
+  m_AnchoredPosition: {x: -104.1001, y: 66.19999}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2375070584581226016
@@ -562,8 +562,8 @@ RectTransform:
   - {fileID: 9109672398920998320}
   - {fileID: 1590900676968736449}
   - {fileID: 6273149961509962472}
-  - {fileID: 651875354118778778}
   - {fileID: 2989828086991350990}
+  - {fileID: 651875354118778778}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -648,4 +648,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AmmoUI
   gunName: {fileID: 0}
-  ammoText: {fileID: 0}
+  ammo: {fileID: 0}
+  weaponImage: {fileID: 0}

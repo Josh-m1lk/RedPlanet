@@ -38,7 +38,7 @@ public class EnemyAttack : MonoBehaviour
             PlayerHealth playerHealth = hitColliders[i].GetComponentInParent<PlayerHealth>();//Does the coliider have player health
             if (playerHealth)
             {
-                animator.SetTrigger("AttackTrigger");
+                animator.SetTrigger("IsAttacking");
                 nextAttackTime = Time.time + attackCooldown;//how fast enemy can attack
                 playerHealth.TakeDamage(attackDmg);
                 isAttacking = true;

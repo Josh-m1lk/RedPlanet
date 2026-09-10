@@ -4,6 +4,7 @@ using UnityEngine;
 [Serializable]
 public class WeaponAmmo
 {
+    public Sprite weaponImage;
     public string weaponName;
     public Transform bulletSpawn;
     public float fireRate;
@@ -51,6 +52,7 @@ public class WeaponSwitching : MonoBehaviour
         WeaponAmmo weapon = CurrentWeapon;
 
         ammoUI?.UpdateGunName(weapon.weaponName);
+        ammoUI?.UpdateWeaponImage(weapon.weaponImage);
         ammoUI?.UpdateAmmoUI(weapon.currentMag, weapon.maxMag);
     }
 }

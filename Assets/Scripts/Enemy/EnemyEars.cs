@@ -16,7 +16,7 @@ public class EnemyEars : MonoBehaviour
         float distanceToSound = Vector3.Distance(transform.position, soundPos);
         if (distanceToSound <= soundRadius && distanceToSound <= hearingRadius)
         {
-            Debug.Log("I heard something");
+            //Debug.Log("I heard something");
             heardSomething = true;
             lastHeardSound = soundPos;
             lastHeardType = type;
