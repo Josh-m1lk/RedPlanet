@@ -43,7 +43,14 @@ public class EnemyAI : MonoBehaviour
     {
         if (enemyFOV.canSeePlayer)
         {
-            targetLastSeen = enemyFOV.playerRef.transform.position;
+            if (enemyFOV.playerRef == null || !enemyFOV.playerRef.activeInHierarchy)
+            {
+                enemyFOV.canSeePlayer = false;
+            }
+            else
+            {
+                targetLastSeen = enemyFOV.playerRef.transform.position;
+            }
         }
 
         if (!enemyFOV.canSeePlayer && enemyEars.heardSomething)

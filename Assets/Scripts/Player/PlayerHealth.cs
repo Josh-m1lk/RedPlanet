@@ -39,7 +39,7 @@ public class PlayerHealth : MonoBehaviour
     public void Death()
     {
         isDead = true;
-        Destroy(gameObject);//If enemy reaches 0 health they die
+        gameObject.SetActive(false);
 
         GameManager.instance.PlayerDied();
     }

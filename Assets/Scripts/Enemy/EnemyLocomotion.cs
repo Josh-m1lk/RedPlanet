@@ -31,7 +31,7 @@ public class EnemyLocomotion : MonoBehaviour
 
     void Awake()
     {
-        animator = GetComponentInChildren<Animator>();
+        //animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.autoBraking = false;//disable for continous movement 
     }
@@ -77,6 +77,7 @@ public class EnemyLocomotion : MonoBehaviour
         agent.SetDestination(points[destinationPoint].position);//go to point 0
         agent.speed = walkSpeed;
         animator.SetBool("IsWalking", true);
+        animator.SetBool("IsRunning", false);
     }
 
     public void Chase(Vector3 targetPosition)
@@ -84,6 +85,7 @@ public class EnemyLocomotion : MonoBehaviour
         agent.SetDestination(targetPosition);
         agent.speed = runSpeed;
         animator.SetBool("IsRunning", true);
+        animator.SetBool("IsWalking", false);
     }
 
     public void Investigate(Vector3 destination)
@@ -96,10 +98,12 @@ public class EnemyLocomotion : MonoBehaviour
         {
             hasReachedLastKnownPosition = true;
             animator.SetBool("IsWalking", false);
+            animator.SetBool("IsRunning", false);
         }
         else
         {
             hasReachedLastKnownPosition = false;
+            animator.SetBool("IsRunning", true);
         }
 
     }
@@ -109,6 +113,7 @@ public class EnemyLocomotion : MonoBehaviour
         isWaiting = true;
         StopMoving();
         animator.SetBool("IsWalking", false);
+        animator.SetBool("IsRunning", false);
 
         yield return new WaitForSeconds(waitTime);//enemy will wait at the current patrol point for x time
 

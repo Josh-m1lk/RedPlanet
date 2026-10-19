@@ -21,7 +21,7 @@ public class EnemyAttack : MonoBehaviour
 
     void Awake()
     {
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         hitColliders = new Collider[maxColliders];//initialize array once
     }
 
@@ -38,10 +38,10 @@ public class EnemyAttack : MonoBehaviour
             PlayerHealth playerHealth = hitColliders[i].GetComponentInParent<PlayerHealth>();//Does the coliider have player health
             if (playerHealth)
             {
+                isAttacking = true;
                 animator.SetTrigger("IsAttacking");
                 nextAttackTime = Time.time + attackCooldown;//how fast enemy can attack
                 playerHealth.TakeDamage(attackDmg);
-                isAttacking = true;
                 break;
             }
         }

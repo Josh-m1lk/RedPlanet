@@ -1147,7 +1147,6 @@ MonoBehaviour:
   videoPlayer: {fileID: 0}
   isPaused: 0
   playerController: {fileID: 634695497685238921}
-  titleScreen: {fileID: 0}
 --- !u!1 &4189192356744868652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1875,6 +1874,7 @@ GameObject:
   - component: {fileID: 8828796624248494549}
   - component: {fileID: 4146651660129462765}
   - component: {fileID: 4827646779648833488}
+  - component: {fileID: 5340900186822686766}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -2143,6 +2143,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 03d392d8-e9fa-469f-b051-2ebae019af1b
     m_ActionName: 'Player/SwitchGuns[/Mouse/scroll]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5340900186822686766}
+        m_TargetAssemblyTypeName: Map, Assembly-CSharp
+        m_MethodName: OnMap
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c5b18d79-d40a-4d5e-83c7-6e3d590132ca
+    m_ActionName: 'Player/Map[/Keyboard/m]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -2228,6 +2244,21 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   interactionPrompt: {fileID: 949237165885987305}
+--- !u!114 &5340900186822686766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7280187584119663536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ddcdb6e8610e974fa68bce2b26564ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Map
+  cameraFollow: {fileID: 1406054219162765255}
+  mapZoomMultiplier: 6
+  transitionSpeed: 7
 --- !u!1 &7485681251283556250
 GameObject:
   m_ObjectHideFlags: 0

@@ -50,17 +50,24 @@ public class EnemyFOV : MonoBehaviour
         //If enemy does not detect anything in sphere return false
         if (hits == 0)
         {
-            canSeePlayer = false;
+            ClearTarget();
             return;
         }
 
-        Transform target = rangeChecks[0].transform;//grab first detected obj
+        PlayerHealth playerHealth = rangeChecks[0].GetComponentInParent<PlayerHealth>();
+        if (playerHealth == null)
+        {
+            ClearTarget();
+            return;
+        }
+
+        Transform target = playerHealth.transform;
         Vector3 directionToTarget = (target.position - transform.position).normalized;//what direction is the target
 
         //If player is outside of vision cone return false
         if (Vector3.Angle(transform.forward, directionToTarget) >= angle / 2)
         {
-            canSeePlayer = false;
+            ClearTarget();
             return;
         }
 
@@ -69,10 +76,18 @@ public class EnemyFOV : MonoBehaviour
         //if there is a wall between enemy and player, return false
         if (Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
         {
-            canSeePlayer = false;
+            ClearTarget();
             return;
         }
 
+        playerRef = playerHealth.gameObject;
         canSeePlayer = true;
+    }
+
+    private void ClearTarget()
+    {
+        playerRef = null;
+        canSeePlayer = false;
+        distanceToTarget = 0f;
     }
 }
