@@ -9,8 +9,7 @@ public class Map : MonoBehaviour
     [SerializeField, Min(1f)] private float mapZoomMultiplier = 2f;
     [SerializeField, Min(0f)] private float transitionSpeed = 5f;
 
-    [SerializeField] PlayerController playerController;
-
+    private PlayerMovement playerMovement;
     private Vector3 normalFollowOffset;
     public bool isMapView;
 
@@ -19,6 +18,7 @@ public class Map : MonoBehaviour
         if (context.performed)
         {
             isMapView = !isMapView;
+            playerMovement.SetMovementEnabled(!isMapView);
         }
     }
     
@@ -37,6 +37,14 @@ public class Map : MonoBehaviour
         }
 
         normalFollowOffset = cameraFollow.FollowOffset;
+
+        playerMovement = GetComponent<PlayerMovement>();
+        if (playerMovement == null)
+        {
+            Debug.LogError("Map requires a PlayerMovement component on the same GameObject.", this);
+            enabled = false;
+            return;
+        }
     }
 
     private void Update()
@@ -46,12 +54,10 @@ public class Map : MonoBehaviour
         if (isMapView)
         {
             targetOffset = normalFollowOffset * mapZoomMultiplier;
-            //playerController.DisableInput();
         }
         else
         {
             targetOffset = normalFollowOffset;
-            //playerController.EnableInput();
         }
 
         cameraFollow.FollowOffset = Vector3.Lerp(cameraFollow.FollowOffset, targetOffset, 1f - Mathf.Exp(-transitionSpeed * Time.deltaTime));

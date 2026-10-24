@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
     [Header("References")]
     private Rigidbody rb;
     private BulletPool bulletPool;
+    private bool hasBeenReturned;
 
     [Header("Settings")]
     public float bulletDamage = 0;
@@ -22,16 +23,21 @@ public class Bullet : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+        if (hasBeenReturned) return;
+
         if (other.TryGetComponent(out EnemyHealth health))
         {
             health.TakeDamage(bulletDamage);//do damage to obj
         }
 
+        hasBeenReturned = true;
         bulletPool.ReturnBullet(this);//Return bullet to pool
     }
 
     public void Fire()
     {
+        hasBeenReturned = false;
+
         if (rb != null)
         {
             rb.linearVelocity = transform.forward * bulletSpeed;//if rb exists spawn bullet moving at set speed

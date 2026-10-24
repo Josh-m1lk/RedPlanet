@@ -8,10 +8,11 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] BulletPool bulletPool;
     [SerializeField] AmmoUI ammoUI;
     [SerializeField] WeaponSwitching weaponSwitching;
+    [SerializeField] AudioSource gunAudioSource;
 
     private float nextFireTime;
     private bool isReloading = false;
-    private float reloadDelay = 2f;
+    [SerializeField] float reloadDelay = 2f;
 
     public int currentMag
     {
@@ -27,6 +28,15 @@ public class PlayerShooting : MonoBehaviour
 
     private void Awake()
     {
+        if (gunAudioSource == null)
+        {
+            gunAudioSource = GetComponent<AudioSource>();
+            if (gunAudioSource == null)
+            {
+                gunAudioSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
         ammoUI.UpdateAmmoUI(currentMag, weaponSwitching.CurrentWeapon.maxMag);
     }
 
@@ -53,6 +63,7 @@ public class PlayerShooting : MonoBehaviour
         if (Time.time > nextFireTime && currentMag > 0)
         {
             WeaponAmmo weapon = weaponSwitching.CurrentWeapon;
+
             nextFireTime = Time.time + weapon.fireRate;//how long you have to wait in between shots
             
             Bullet bullet = bulletPool.GetBullet();//Get bullet from pool
@@ -64,6 +75,11 @@ public class PlayerShooting : MonoBehaviour
             bullet.bulletSpeed = weapon.bulletSpeed;
 
             bullet.Fire();//Call fire function after player shoots
+            if (weapon.shotClip != null)
+            {
+                gunAudioSource.PlayOneShot(weapon.shotClip);
+            }
+
             SoundManager.EmitSound(weapon.bulletSpawn.position, weapon.gunShotRadius, SoundType.Gunshot);
 
             currentMag--;//decrease ammo count in mag
@@ -78,6 +94,12 @@ public class PlayerShooting : MonoBehaviour
         if (currentMag == weaponSwitching.CurrentWeapon.maxMag)
         {
             return;
+        }
+
+        WeaponAmmo weapon = weaponSwitching.CurrentWeapon;
+        if (weapon.reloadClip != null)
+        {
+            gunAudioSource.PlayOneShot(weapon.reloadClip);
         }
 
         isReloading = true;

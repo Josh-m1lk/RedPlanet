@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Input")]
     private Vector2 moveInput, mouseLook;
+    private bool movementEnabled = true;
 
     [Header("References")]
     private Rigidbody rb;
@@ -18,7 +19,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        moveInput = context.ReadValue<Vector2>();//Call to move input actions
+        moveInput = movementEnabled ? context.ReadValue<Vector2>() : Vector2.zero;
+    }
+
+    public void SetMovementEnabled(bool allowMovement)
+    {
+        movementEnabled = allowMovement;
+        if (!allowMovement)
+        {
+            moveInput = Vector2.zero;
+        }
     }
 
     public void OnMouseLook(InputAction.CallbackContext context)
@@ -44,6 +54,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
+        if (!movementEnabled) return;
+
         Vector3 movement = new Vector3(moveInput.x, 0f, moveInput.y);//Get player input
         movement = Vector3.ClampMagnitude(movement, maxInputMagnitude);//Limit player movement to maximum input
 

@@ -10,6 +10,8 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] Button startGame;
     [SerializeField] Button options;
     [SerializeField] Button quitGame;
+    [SerializeField] AudioSource ambianceSource;
+    [SerializeField] AudioClip ambianceClip;
 
     [Header("OptionsMenu")]
     [SerializeField] GameObject optionsMenu;
@@ -17,13 +19,16 @@ public class TitleScreen : MonoBehaviour
     //[SerializeField] AudioMixer masterVolume;
     //[SerializeField] Slider brightness;
     [SerializeField] Button goBack;
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip clickSound;
+    //[SerializeField] AudioSource buttonSource;
+    //[SerializeField] AudioClip clickClip;
+    
 
     void Awake()
     {
         if (mainMenu != null) mainMenu.SetActive(true);
         if (optionsMenu != null) optionsMenu.SetActive(false);
+        ambianceSource.clip = ambianceClip;
+        ambianceSource.Play();
     }
 
     #region MainMenuFunctions
@@ -31,6 +36,7 @@ public class TitleScreen : MonoBehaviour
     public void OnStart()
     {
         LevelManager.Instance.LoadNextScene();
+        ambianceSource.Stop();
     }
 
     public void OnOptions()

@@ -232,7 +232,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   gameState: 0
   levelManager: {fileID: 268642391}
-  pauseMenu: {fileID: 1330761824}
 --- !u!114 &268642391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2893,17 +2892,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 313a508e8c4348d46824eee08febcf07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletPool
---- !u!114 &1330761824 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1692491023530810833, guid: afac158efa9816b4598349819de342dc, type: 3}
-  m_PrefabInstance: {fileID: 7438258202001020215}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a9b5e206ad9eaf4d908a121065bbd2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
 --- !u!1 &1357976750
 GameObject:
   m_ObjectHideFlags: 0
@@ -4660,6 +4648,10 @@ PrefabInstance:
       propertyPath: videoPlayer
       value: 
       objectReference: {fileID: 1788754519}
+    - target: {fileID: 4322445364124481955, guid: afac158efa9816b4598349819de342dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.53
+      objectReference: {fileID: 0}
     - target: {fileID: 4784631935158380228, guid: afac158efa9816b4598349819de342dc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

@@ -1,4 +1,3 @@
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
@@ -15,6 +14,8 @@ public class EnemyAttack : MonoBehaviour
     private Collider[] hitColliders;
     [SerializeField] Transform attackPoint;
     [SerializeField] Animator animator;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip audioClip;
 
     [Header("ScriptReferences")]
     [SerializeField] EnemyFOV enemyFOV;
@@ -22,6 +23,15 @@ public class EnemyAttack : MonoBehaviour
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        if (audioSource == null)
+        {
+            audioSource = GetComponent<AudioSource>();
+            if (audioSource == null)
+            {
+                audioSource = gameObject.AddComponent<AudioSource>();
+            }
+        }
+
         hitColliders = new Collider[maxColliders];//initialize array once
     }
 
@@ -32,7 +42,7 @@ public class EnemyAttack : MonoBehaviour
         int hits = Physics.OverlapSphereNonAlloc(transform.position, attackRange, hitColliders, enemyFOV.targetMask);//Determines how big hit detection sphere is
         
         if (hits == 0) return;//If nothing detected return nothing
-        Debug.Log("I got detected");
+        //Debug.Log("I got detected");
         for (int i = 0; i < hits; i++)
         {
             PlayerHealth playerHealth = hitColliders[i].GetComponentInParent<PlayerHealth>();//Does the coliider have player health
@@ -45,6 +55,11 @@ public class EnemyAttack : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void PlayAttackSound()
+    {
+        audioSource.PlayOneShot(audioClip);
     }
 
     public void OnDrawGizmosSelected()

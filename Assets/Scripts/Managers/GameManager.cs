@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public GameStates gameState;
     [SerializeField] LevelManager levelManager;
-    [SerializeField] PauseMenu pauseMenu;
+    //[SerializeField] PauseMenu pauseMenu;
 
     void Awake()
     {
@@ -39,14 +39,14 @@ public class GameManager : MonoBehaviour
 
     public void PauseGame()
     {
-        if (pauseMenu.isPaused)
+        /*if (pauseMenu.isPaused)
         {
             gameState = GameStates.Pause;
         }
         else if (!pauseMenu.isPaused)
         {
             gameState = GameStates.Playing;
-        }
+        }*/
         
     }
 

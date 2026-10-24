@@ -403,7 +403,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.164
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1244,7 +1244,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   gameState: 0
   levelManager: {fileID: 1153775708}
-  pauseMenu: {fileID: 0}
 --- !u!4 &1153775710
 Transform:
   m_ObjectHideFlags: 0
@@ -1382,11 +1381,11 @@ MonoBehaviour:
   startGame: {fileID: 33602476}
   options: {fileID: 1145701711}
   quitGame: {fileID: 1837310579}
+  ambianceSource: {fileID: 1190883937}
+  ambianceClip: {fileID: 8300000, guid: dfbfa0997e0c85a49ab8a63b70a0a970, type: 3}
   optionsMenu: {fileID: 1975605133}
-  volume: {fileID: 0}
+  volume: {fileID: 1920014084}
   goBack: {fileID: 1565228059}
-  audioSource: {fileID: 1190883937}
-  clickSound: {fileID: 8300000, guid: a0e3fc74d5022764da3ae7795405611a, type: 3}
 --- !u!82 &1190883937
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1400,9 +1399,9 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.474
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] PauseMenu pauseMenu;
     [SerializeField] WeaponSwitching weaponSwitching;
     [SerializeField] PlayerShooting playerShooting;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip audioClip;
 
     private void Awake()
     {
@@ -16,6 +18,8 @@ public class PlayerController : MonoBehaviour
         {
             playerShooting = GetComponent<PlayerShooting>();
         }
+
+        audioSource.clip = audioClip;
     }
 
     public void OnNextWeapon(InputAction.CallbackContext context)
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour
         {
             playerShooting.CancelReload();
             weaponSwitching.SelectWeapon();
+            //audioSource.Play();
         }
     }
 

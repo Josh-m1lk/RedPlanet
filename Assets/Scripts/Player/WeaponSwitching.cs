@@ -6,6 +6,8 @@ public class WeaponAmmo
 {
     public Sprite weaponImage;
     public string weaponName;
+    public AudioClip shotClip;
+    public AudioClip reloadClip;
     public Transform bulletSpawn;
     public float fireRate;
     public float gunShotRadius;

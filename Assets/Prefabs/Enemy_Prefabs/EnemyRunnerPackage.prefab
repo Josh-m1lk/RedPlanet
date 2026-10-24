@@ -116,7 +116,39 @@ Transform:
   m_Children:
   - {fileID: 5219052729731411360}
   - {fileID: 655556870998109294}
+  - {fileID: 3467046289147050594}
   m_Father: {fileID: 4727019887803180474}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4869227937523666148
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3467046289147050594}
+  m_Layer: 8
+  m_Name: GameObject (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3467046289147050594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4869227937523666148}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -16.4, y: 0, z: 28.74}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7228259530236160641}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6619437937806582532
 GameObject:
@@ -143,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 6619437937806582532}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.94}
+  m_LocalPosition: {x: 0, y: 0, z: 38.37}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -174,7 +206,7 @@ Transform:
   m_GameObject: {fileID: 7979490713375406855}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 25.41}
+  m_LocalPosition: {x: -0.95, y: 0, z: 3.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -202,7 +234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3286da9c7f43fb04bb398f7481ffbce6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -769.6334
+      value: -764.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3286da9c7f43fb04bb398f7481ffbce6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -381,10 +413,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLocomotion
   agent: {fileID: 7307046295115719798}
   points:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 5219052729731411360}
+  - {fileID: 655556870998109294}
+  - {fileID: 3467046289147050594}
   animator: {fileID: 1691545173697953728}
   attackDistance: 2
   walkSpeed: 2
@@ -451,6 +482,8 @@ MonoBehaviour:
   attackCooldown: 1
   attackPoint: {fileID: 3125013503035959097}
   animator: {fileID: 1691545173697953728}
+  audioSource: {fileID: 0}
+  audioClip: {fileID: 8300000, guid: 7c47ecce0c239594f96a2179e6a9dd4b, type: 3}
   enemyFOV: {fileID: 5273002648683917397}
 --- !u!114 &7615364052404091331
 MonoBehaviour:
